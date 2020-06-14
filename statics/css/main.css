@@ -1,0 +1,111 @@
+*, *:before, *:after{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+	height: 100vh
+}
+
+footer, header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #283E4A;
+	color: rgba(255, 255, 255, 0.8);
+	padding: 0px 5px;
+}
+
+header{
+	height: 10vh;
+}
+
+footer{
+	height: 4vh;
+	color: rgba(255, 255, 255, 0.3);
+}
+
+#logo{
+	font-weight: bolder;
+	font-size: 25px;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+ul{
+	list-style-type: none;
+}
+
+li{
+	display: inline-block;
+}
+
+#main-section{
+	height: 88vh;
+	display: flex;
+
+}
+
+#message-area{
+	flex: 3;
+	background-color: #C6BC98;
+}
+
+#contact-info{
+	flex: 1;
+	background-color: #E5EBF1;
+}
+
+.button{
+	padding: 5px 5px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 4px black;
+	box-sizing: border-box;
+	margin-right: 20px;
+	cursor: pointer;
+	font-weight: bolder;
+}
+
+#registration-block, #login-block{
+	padding: 50px 50px;
+	display: none;
+}
+
+input[type='text'], input[type='email'], input[type='password']{
+	width: 300px;
+	padding: 5px 20px;
+	margin: 5px 0px;
+	border: 2px solid white;
+	border-radius: 5px;
+	box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+	font-weight: bold;
+	font-size: 20;
+	outline: none;
+}
+
+#correct-email-error, #correct-password-error, #password-match-error{
+	width: 300px;
+	color: rgba(0, 0, 0, 0.5);
+	font-size: 12px;
+	overflow-wrap: break-word;
+	padding: 5px 5px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+input:focus{
+	border: 2px solid #283E4A; 
+}
+
+.submit-button{
+	margin: 10px 0px;
+	padding: 6px 10px;
+	outline: none;
+	box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+	font-size: 20;
+	font-weight: bolder;
+	border: none;
+	border-radius: 5px;
+}

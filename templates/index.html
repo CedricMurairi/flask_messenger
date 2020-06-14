@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="statics/css/main.css">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<div id="logo">
+				Flask Messenger
+			</div>
+			<nav>
+				<ul id="buttons">
+					<li id="signin" class="button white">Sing In</li>
+					<li id="register" class="button red">Register</li>
+				</ul>
+			</nav>
+		</header>
+		<section id="main-section">
+			<div id="login-block">
+				<form id="login-form">
+					<input id="log-email" type="email" name="mail" placeholder="Enter your mail"><br>
+					<input id="log-password" type="password" name="password" placeholder="Enter your password"><br>
+					<button type="submit" class="submit-button">Login</button>
+				</form>
+			</div>
+			<div id="registration-block">
+				<form id="registration-form">
+					<input id="reg-name" type="text" name="name" placeholder="Enter your name"><br>
+					<input id="reg-email" type="email" name="mail" placeholder="Enter your mail"><br>
+					<input id="reg-password" type="password" name="password" placeholder="Enter your password"><br>
+					<input id="reg-password-repeat" type="password" name="repeat-password" placeholder="Repeat oyur password"><br>
+					<button type="submit" class="submit-button">Register</button>
+				</form>
+				<div>
+					<p id="correct-email-error">Type in a correct mail address</p>
+					<p id="correct-password-error">Password should contain: number, special caracter, number(LWC&UPC)</p>
+					<p id="password-match-error">Passwords should match</p>
+				</div>
+			</div>
+			<aside id="contact-info">
+				
+			</aside>
+			<section id="message-area">
+				<input type="text" name="message" id="message">
+				<button id="sending-button">send</button>
+			</section>
+		</section>
+		<footer>
+			<div>&copy Copy Rights, Black Hole 2020</div>
+			<div id="join-media">
+				<ul>
+					<li>Instagram</li>
+					<li>Twitter</li>
+					<li>Facebook</li>
+					<li>LinkedIn</li>
+				</ul>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript" src="statics/javascript/main.js"></script>
+</body>
+</html>
