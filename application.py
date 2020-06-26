@@ -54,7 +54,7 @@ def login():
     return jsonify({"login": False, "error": "User entered a wrong email or password"})
 
 
-@app.route('/logout')
+@app.route('/logout', methods=["POST"])
 def logout():
     session.pop('name')
     session.pop('email')

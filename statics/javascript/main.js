@@ -63,15 +63,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			response.json().then(function (data) {
 				if (data.login == true) {
+					document.title = 'app';
+					history.pushState(null, 'app', 'app');
 					console.log(data);
-					// const displayName = data.result.name;
-					// const email = data.result.email;
-					// document.querySelector("#signin").style.display = "none";
-					// document.querySelector("#register").style.display = "none";
-					// document.querySelector("#login-block").style.display = "none";
-					// document.querySelector("#registration-block").style.display = "none";
-					// const signout = document.createElement("li").innerHTML = "LogOut";
-					// document.querySelector("#buttons").append(signout);
+					const displayName = data.result[1];
+					const email = data.result.email;
+					const userCard = document.querySelector("#user-name");
+					document.querySelector("#signin").style.display = "none";
+					document.querySelector("#register").style.display = "none";
+					document.querySelector("#login-block").style.display = "none";
+					document.querySelector("#registration-block").style.display = "none";
+					document.querySelector("#logout").style.display = "inline-block";
+					userCard.style.display = "inline-block";
+					userCard.innerHTML = `${displayName}`
+					document.querySelector('#contact-info').style.display = "block";
+					document.querySelector('#message-area').style.display = "block";
 				}
 
 				else {
@@ -114,6 +120,28 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
+	document.querySelector('#logout').onclick = () => {
+		fetch(`${window.origin}/logout`, {
+			method: 'POST',
+			credentials: "omit",
+			body: null,
+			cache: "no-cache",
+			headers: new Headers({
+				"context-type": "application/json"
+			})
+		}).then(function (response) {
+			if (response.status !== 200) {
+				console.log("Domething went wrong with logout");
+				return;
+			}
+			response.json().then(function (data) {
+				if (data.logout == true) {
+					console.log(data);
+				}
+			})
+		})
+	}
+
 	document.querySelector('#registration-form').onsubmit = () => {
 		alert('registration-form submitted');
 		// const request = new XMLHttpRequest();
@@ -145,14 +173,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			response.json().then(function (data) {
 				if (data.registered == true) {
+					document.title = 'app';
+					history.pushState(null, 'app', 'app');
 					const displayName = user_name;
 					// const user_email = user_email;
+					const userCard = document.querySelector("#user-name");
 					document.querySelector("#signin").style.display = "none";
 					document.querySelector("#register").style.display = "none";
 					document.querySelector("#login-block").style.display = "none";
 					document.querySelector("#registration-block").style.display = "none"
-					const signout = document.createElement("li").innerHTML = "LogOut";
-					document.querySelector("#buttons").append(signout);
+					document.querySelector("#logout").style.display = "inline-block";
+					userCard.style.display = "inline-block";
+					userCard.innerHTML = `${displayName}`
+					document.querySelector('#contact-info').style.display = "block";
+					document.querySelector('#message-area').style.display = "block";
 				}
 
 				else {

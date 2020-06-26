@@ -48,12 +48,36 @@ li{
 
 #message-area{
 	flex: 3;
-	background-color: #C6BC98;
+	/*background-color: #C6BC98;*/
 }
 
 #contact-info{
 	flex: 1;
 	background-color: #E5EBF1;
+}
+
+.drop-down-button{
+	padding: 15px 20px;
+	border-radius: 50px;
+	background-color: #3b4549;
+	margin: 10px 10px;
+	font-size: 20;
+	font-weight: bold;
+	color: white;
+	max-width: 250px;
+	letter-spacing: 1.5px;
+}
+
+#chanels-list h3, #conversation-list h3{
+	padding: 15px 20px;
+}
+
+hr{
+	margin: auto;
+	width: 90%;
+	height: 3px;
+	opacity: 0.2;
+	background-color: black;
 }
 
 .button{
@@ -64,6 +88,15 @@ li{
 	margin-right: 20px;
 	cursor: pointer;
 	font-weight: bolder;
+}
+
+.clear-blue{
+	background-color: rgba(255, 255, 255, .8);
+	color: #283E4A;;
+}
+
+#logout, #user-name{
+	display: none;
 }
 
 #registration-block, #login-block{
