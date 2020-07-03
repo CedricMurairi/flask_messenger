@@ -1,95 +1,13 @@
 // alert('Hello I am here for you sir');
 document.addEventListener('DOMContentLoaded', () => {
 
-	// var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-	// document.querySelector('#sending-button').onclick = ()=>{
-	// 	alert('message sent');
-	// 	var message = document.querySelector('#message').value;
-	// 	// socket.emit('send message', {'message': message});
-	// }
-
-	// socket.on('connect', ()=>{
-	// 	document.querySelector('#sending-button').onclick = ()=>{
-	// 		alert('message sent');
-	// 		var message = document.querySelector('#message').value;
-	// 		socket.emit('send message', {'message': message});
-	// 	}
-	// });
-
-	// socket.on('recieve message', data =>{
-	// 	const p = document.createElement('p');
-	// 	const message = data.selection;
-	// 	p.innerHTML = message;
-	// 	document.querySelector('#message-area').append(p);
-	// });
-
-	document.getElementById('signin').addEventListener('click', function () {
-		document.querySelector('#login-block').style.display = "block";
-		document.querySelector('#registration-block').style.display = "none";
-		document.querySelector('#contact-info').style.display = "none";
-		document.querySelector('#message-area').style.display = "none";
-	}, true);
-
-	document.getElementById('register').addEventListener('click', function () {
-		document.querySelector('#login-block').style.display = "none";
-		document.querySelector('#registration-block').style.display = "block";
-		document.querySelector('#contact-info').style.display = "none";
-		document.querySelector('#message-area').style.display = "none";
-	}, true);
-
-	document.querySelector('#login-form').onsubmit = () => {
-		alert('signin-form submitted');
-		const user_email = document.querySelector("#log-email").value;
-		const user_password = document.querySelector("#log-password").value
-
-		var input = {
-			email: user_email,
-			password: user_password
-		}
-
-		fetch(`${window.origin}/login_user`, {
-			method: 'POST',
-			credentials: "include",
-			body: JSON.stringify(input),
-			cache: "no-cache",
-			headers: new Headers({
-				"content-type": "application/json"
-			})
-		}).then(function (response) {
-			if (response.status !== 200) {
-				console.log(`There ha been an error with the data ${response.status}`);
-				return;
-			}
-
-			response.json().then(function (data) {
-				if (data.login == true) {
-					document.title = 'app';
-					history.pushState(null, 'app', 'app');
-					console.log(data);
-					const displayName = data.result[1];
-					const email = data.result.email;
-					const userCard = document.querySelector("#user-name");
-					document.querySelector("#signin").style.display = "none";
-					document.querySelector("#register").style.display = "none";
-					document.querySelector("#login-block").style.display = "none";
-					document.querySelector("#registration-block").style.display = "none";
-					document.querySelector("#logout").style.display = "inline-block";
-					userCard.style.display = "inline-block";
-					userCard.innerHTML = `${displayName}`
-					document.querySelector('#contact-info').style.display = "block";
-					document.querySelector('#message-area').style.display = "block";
-				}
-
-				else {
-					console.log(data);
-					const errorMessage = document.createElement('h4').innerHTML = `Error ${data.error}`;
-					document.querySelector("#login-block").append(errorMessage);
-				}
-			});
-		})
-
-		return false;
-	}
+	var login_block = document.querySelector('#login-block');
+	var registration_block = document.querySelector('#registration-block');
+	var main_container = document.querySelector('#main-container');
+	var signin_button = document.querySelector('#signin');
+	var register_button = document.querySelector('#register');
+	var logout_button = document.querySelector('#logout');
+	var account_card = document.querySelector('#account');
 
 	document.querySelector('#reg-email').onkeyup = () => {
 		const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -120,30 +38,69 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	document.querySelector('#logout').onclick = () => {
-		fetch(`${window.origin}/logout`, {
-			method: 'POST',
-			credentials: "omit",
-			body: null,
-			cache: "no-cache",
-			headers: new Headers({
-				"context-type": "application/json"
-			})
-		}).then(function (response) {
-			if (response.status !== 200) {
-				console.log("Domething went wrong with logout");
-				return;
-			}
-			response.json().then(function (data) {
-				if (data.logout == true) {
-					console.log(data);
+	document.getElementById('signin').addEventListener('click', function () {
+		login_block.style.display = "block";
+		registration_block.style.display = "none";
+	}, true);
+
+	document.getElementById('register').addEventListener('click', function () {
+		login_block.style.display = "none";
+		registration_block.style.display = "block";
+	}, true);
+
+	document.querySelector('#login-form').onsubmit = () => {
+		const user_email = document.querySelector("#log-email").value;
+		const user_password = document.querySelector("#log-password").value
+
+		const login_url = '/auth/login';
+
+		const request = new XMLHttpRequest();
+
+		request.onload = function(){
+			try{
+				if (request.readyState == XMLHttpRequest.DONE) {
+					if (request.status == 200){
+						response = JSON.parse(request.responseText);
+						if (response.login){
+							console.log('already in');
+							var flash_message = document.createElement('div');
+							flash_message.innerHTML = '<p>You have log in successfully</p>';
+							flash_message.className = 'flash_message';
+							login_block.style.display = 'none';
+							registration_block.style.display = 'none';
+							main_container.append(flash_message);
+							signin_button.style.display = 'none';
+							register_button.style.display = 'none';
+							logout_button.style.display = 'block';
+							account_card.style.display = 'block';
+
+						}
+					}
+
+					else{
+						console.log('Something really bad happend');
+					}
 				}
-			})
-		})
+			}catch(e){
+				console.log(e)
+			}
+		}
+
+		request.open('POST', window.origin + login_url, true);
+
+		const input = new FormData();
+		input.append('email', user_email);
+		input.append('password', user_password);
+
+		request.send(input);
+
+		return false;
+	}
+
+	document.querySelector('#logout').onclick = () => {
 	}
 
 	document.querySelector('#registration-form').onsubmit = () => {
-		alert('registration-form submitted');
 		// const request = new XMLHttpRequest();
 		const user_name = document.querySelector("#reg-name").value;
 		const user_email = document.querySelector("#reg-email").value;
@@ -151,85 +108,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		// request.open('POST', `${window.origin}/register`);
 
-		var input = {
-			name: user_name,
-			email: user_email,
-			password: user_password
+		const input = new FormData();
+		input.append('name', user_name);
+		input.append('email', user_email);
+		input.append('password', user_password);
+
+		const registration_url = '/auth/register';
+
+		const request = new XMLHttpRequest();
+
+		request.onload = function(){
+			try{
+				if (request.readyState == XMLHttpRequest.DONE) {
+					if (request.status == 200){
+						console.log(JSON.parse(request.responseText));
+					}
+
+					else{
+						console.log('Something really bad happend');
+					}
+				}
+			}catch(e){
+				console.log(e)
+			}
 		}
 
-		fetch(`${window.origin}/register_user`, {
-			method: 'POST',
-			credentials: "include",
-			body: JSON.stringify(input),
-			cache: "no-cache",
-			headers: new Headers({
-				"content-type": "application/json"
-			})
-		}).then(function (response) {
-			if (response.status !== 200) {
-				console.log(`There ha been an error with the data ${response.status}`);
-				return;
-			}
+		request.open('POST', window.origin + registration_url, true);
 
-			response.json().then(function (data) {
-				if (data.registered == true) {
-					document.title = 'app';
-					history.pushState(null, 'app', 'app');
-					const displayName = user_name;
-					// const user_email = user_email;
-					const userCard = document.querySelector("#user-name");
-					document.querySelector("#signin").style.display = "none";
-					document.querySelector("#register").style.display = "none";
-					document.querySelector("#login-block").style.display = "none";
-					document.querySelector("#registration-block").style.display = "none"
-					document.querySelector("#logout").style.display = "inline-block";
-					userCard.style.display = "inline-block";
-					userCard.innerHTML = `${displayName}`
-					document.querySelector('#contact-info').style.display = "block";
-					document.querySelector('#message-area').style.display = "block";
-				}
+		request.send(input);
 
-				else {
-					const errorMessage = document.createElement('h4').innerHTML = `Error ${data.error}`;
-					document.querySelector("#registration-block").append(errorMessage);
-				}
-			});
-		})
 
-		// console.log('open request');
-
-		// request.onload = () => {
-		// 	console.log(request.status);
-		// 	const data = JSON.parse(request.responseXML);
-
-		// 	console.log('data recieved');
-		// 	console.log(data);
-
-		// 	if (data.registered == true) {
-		// 		const displayName = name;
-		// 		const user_email = email;
-		// 		document.querySelector("#signin").style.display = "none";
-		// 		document.querySelector("#register").style.display = "none";
-		// 		const signout = document.createElement("li").className = "button";
-		// 		document.querySelector("#buttons").append(signout);
-		// 	}
-
-		// 	else {
-		// 		const errorMessage = document.createElement('h4').innerHTML = `Error ${data.error}`;
-		// 		document.querySelector("#registration-block").append(errorMessage);
-		// 	}
-		// };
-
-		// const data = new FormData();
-		// var input = {
-		// 	'name': name,
-		// 	'email': email,
-		// 	'password': password
-		// }
-		// data.append(input);
-
-		// request.send(data);
-		// console.log('data sent');
 		return false;
 	}
 });

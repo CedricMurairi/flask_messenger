@@ -5,7 +5,7 @@
 }
 
 body{
-	height: 100vh
+	height: 100vh;
 }
 
 footer, header{
@@ -14,7 +14,7 @@ footer, header{
 	align-items: center;
 	background-color: #283E4A;
 	color: rgba(255, 255, 255, 0.8);
-	padding: 0px 5px;
+	padding: 0px 40px;
 }
 
 header{
@@ -22,7 +22,7 @@ header{
 }
 
 footer{
-	height: 4vh;
+	height: 10vh;
 	color: rgba(255, 255, 255, 0.3);
 }
 
@@ -30,6 +30,10 @@ footer{
 	font-weight: bolder;
 	font-size: 25px;
 	color: rgba(255, 255, 255, 0.5);
+}
+
+header ul{
+	display: flex;
 }
 
 ul{
@@ -41,9 +45,14 @@ li{
 }
 
 #main-section{
-	height: 88vh;
+	height: 80vh;
 	display: flex;
+	justify-content: center;
+	align-content: center;
+}
 
+#welcome-section{
+	height: 80vh;
 }
 
 #message-area{
@@ -95,12 +104,15 @@ hr{
 	color: #283E4A;;
 }
 
-#logout, #user-name{
+#logout, #account{
 	display: none;
 }
 
 #registration-block, #login-block{
-	padding: 50px 50px;
+	padding: 50px;
+}
+
+#registration-block{
 	display: none;
 }
 
@@ -141,4 +153,14 @@ input:focus{
 	font-weight: bolder;
 	border: none;
 	border-radius: 5px;
+}
+
+.flash_message{
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: 1px solid grey;
+	margin-top: 20px;
+	font-weight: bold;
+	font-family: Helvetica;
+	letter-spacing: 1px;
 }
