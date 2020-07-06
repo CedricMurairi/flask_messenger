@@ -1,0 +1,29 @@
+{% extends 'template.html' %}
+
+
+{% block title %}Signin Page{% endblock %}
+
+{% block header %}
+	<div id="logo">
+		Flask Messenger
+	</div>
+	<nav>
+		<ul id="buttons">
+			<a href="{{ url_for('auth.register') }}"><li id="register" class="button red">Register</li></a>
+		</ul>
+	</nav>
+{% endblock %}
+{% block body %}
+	{% for message in get_flashed_messages() %}
+		<h3 class="flash_message">{{ message }}</h3>
+	{% endfor %}
+	<section id="main-section">
+		<div id="login-block">
+			<form id="login-form" method="POST" action="{{url_for('auth.login')}}">
+				<input id="log-email" type="email" name="email" placeholder="Enter your mail"><br>
+				<input id="log-password" type="password" name="password" placeholder="Enter your password"><br>
+				<button type="submit" class="submit-button">Login</button>
+			</form>
+		</div>
+	</section>
+{% endblock %}

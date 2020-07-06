@@ -2,8 +2,29 @@
 <html>
 <head>
 	<title>{% block title %}{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
+	<div id="wrapper">
+		<header>
+			{% block header %}{% endblock %}
+		</header>
 
+		{% block body %}{% endblock %}
+
+		<footer>
+			<div>&copy Copy Rights, Black Hole 2020</div>
+			<div id="join-media">
+				<ul>
+					<li>Instagram</li>
+					<li>Twitter</li>
+					<li>Facebook</li>
+					<li>LinkedIn</li>
+				</ul>
+			</div>
+		</footer>
+	</div>
+	<script type="text/javascript" src="/static/javascript/app.js"></script>
 </body>
 </html>

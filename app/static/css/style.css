@@ -51,20 +51,6 @@ li{
 	align-content: center;
 }
 
-#welcome-section{
-	height: 80vh;
-}
-
-#message-area{
-	flex: 3;
-	/*background-color: #C6BC98;*/
-}
-
-#contact-info{
-	flex: 1;
-	background-color: #E5EBF1;
-}
-
 .drop-down-button{
 	padding: 15px 20px;
 	border-radius: 50px;
@@ -75,10 +61,6 @@ li{
 	color: white;
 	max-width: 250px;
 	letter-spacing: 1.5px;
-}
-
-#chanels-list h3, #conversation-list h3{
-	padding: 15px 20px;
 }
 
 hr{
@@ -97,6 +79,7 @@ hr{
 	margin-right: 20px;
 	cursor: pointer;
 	font-weight: bolder;
+	color: rgba(255, 255, 255, 0.8);
 }
 
 .clear-blue{
@@ -104,16 +87,8 @@ hr{
 	color: #283E4A;;
 }
 
-#logout, #account{
-	display: none;
-}
-
 #registration-block, #login-block{
 	padding: 50px;
-}
-
-#registration-block{
-	display: none;
 }
 
 input[type='text'], input[type='email'], input[type='password']{
@@ -156,11 +131,46 @@ input:focus{
 }
 
 .flash_message{
+	width: fit-content;
 	padding: 10px 20px;
 	border-radius: 5px;
 	border: 1px solid grey;
-	margin-top: 20px;
+	margin-top: 5px;
 	font-weight: bold;
 	font-family: Helvetica;
 	letter-spacing: 1px;
+}
+
+#main-container{
+	height: 80vh;
+	display: flex;
+}
+
+#main-screen{
+	flex: 3;
+}
+
+#aside-card{
+	padding: 10px 20px 10px 10px;
+	flex: 1;
+}
+
+#aside-card #up, #aside-card #down{
+	height: 50%;
+}
+
+#aside-card #up p, #aside-card #down p{
+	padding: 5px 10px;
+	margin-bottom: 5px;
+}
+
+#aside-card #down p{
+	background-color: white;
+}
+
+#aside-card #up p{
+	border-radius: 5px;
+	color: white;
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+	background-color: #283E4A;
 }

@@ -1,83 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>{% block title %}{% endblock %}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="statics/css/main.css">
-</head>
-<body>
-	<div id="wrapper">
-		<header>
-			<div id="logo">
-				Flask Messenger
-			</div>
-			<nav>
-				<ul id="buttons">
-					<li id="signin" class="button white">Sing In</li>
-					<li id="register" class="button red">Register</li>
-					<li id="logout" class="button">LogOut</li>
-					<li id="account" class="button clear-blue"></li>
-				</ul>
-			</nav>
-		</header>
-		<section id="main-section">
-			<div id="login-block">
-				<form id="login-form">
-					<input id="log-email" type="email" name="mail" placeholder="Enter your mail"><br>
-					<input id="log-password" type="password" name="password" placeholder="Enter your password"><br>
-					<button type="submit" class="submit-button">Login</button>
-				</form>
-			</div>
-			<div id="registration-block">
-				<form id="registration-form">
-					<input id="reg-name" type="text" name="name" placeholder="Enter your name"><br>
-					<input id="reg-email" type="email" name="mail" placeholder="Enter your mail"><br>
-					<input id="reg-password" type="password" name="password" placeholder="Enter your password"><br>
-					<input id="reg-password-repeat" type="password" name="repeat-password" placeholder="Repeat oyur password"><br>
-					<button type="submit" class="submit-button">Register</button>
-				</form>
-				<div>
-					<p id="correct-email-error">Type in a correct mail address</p>
-					<p id="correct-password-error">Password should contain: number, special caracter, number(LWC&UPC)</p>
-					<p id="password-match-error">Passwords should match</p>
-				</div>
-			</div>
-			<!-- <aside id="contact-info">
-				<div id="start-conversation" class="drop-down-button">+Start Conversation</div>
-				<div id="start-conversation" class="drop-down-button">+Start Chanel</div>
-				<div id="start-conversation" class="drop-down-button">+Join Chanel</div>
-				<hr>
-				<div id="chanels-list">
-					<h3>Chanels</h3>
-					<div id="chanels"></div>
-				</div>
-				<hr>
-				<div id="conversation-list">
-					<h3>Conversations</h3>
-					<div id="conversation"></div>
-				</div>
-				<hr>
-			</aside>
-			<section id="message-area">
-				<input type="text" name="message" id="message">
-				<button id="sending-button">send</button>
-			</section> -->
-			<div id="main-container">
-				
-			</div>
-		</section>
-		<footer>
-			<div>&copy Copy Rights, Black Hole 2020</div>
-			<div id="join-media">
-				<ul>
-					<li>Instagram</li>
-					<li>Twitter</li>
-					<li>Facebook</li>
-					<li>LinkedIn</li>
-				</ul>
-			</div>
-		</footer>
+{% extends 'template.html' %}
+
+
+{% block title %}Home Page{% endblock %}
+
+{% block header %}
+	<div id="logo">
+		Flask Messenger
 	</div>
-	<script type="text/javascript" src="statics/javascript/main.js"></script>
-</body>
-</html>
+	<nav>
+		<ul id="buttons">
+			<a href="{{ url_for('auth.logout') }}"><li id="logout" class="button">LogOut</li></a>
+			<li id="account" class="button clear-blue">
+				{{username}}
+			</li>
+		</ul>
+	</nav>
+{% endblock %}
+{% block body %}
+	{% for message in get_flashed_messages() %}
+		<h3 class="flash_message">{{ message }}</h3>
+	{% endfor %}
+	<div id="main-container">
+		<div id="aside-card">
+			<div id="up">
+				<p>+Start a conversation</p>
+				<p>+Start a chanel</p>
+				<p>+Join a chanel</p>
+			</div>
+			<hr>
+			<div id="down">
+				<p>Chanels</p>
+				<p>Conversation</p>
+			</div>
+		</div>
+		<div id="main-screen">
+			<p>Here is the main screen</p>
+		</div>
+	</div>
+{% endblock %}
