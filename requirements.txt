@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 alembic==1.4.2
 click==7.1.2
 Flask==1.1.2
@@ -11,6 +12,13 @@ MarkupSafe==1.1.1
 psycopg2==2.8.5
 python-dateutil==2.8.1
 python-editor==1.0.4
+=======
+Flask-SocketIO==4.3.1
+itsdangerous==1.1.0
+MarkupSafe==1.1.1
+python-engineio==3.13.1
+python-socketio==4.6.0
+>>>>>>> a7e26b3e1251d696a3fad661f595a3919160b8e0
 six==1.15.0
 SQLAlchemy==1.3.18
 Werkzeug==1.0.1
