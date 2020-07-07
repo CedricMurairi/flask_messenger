@@ -8,6 +8,36 @@ document.addEventListener('DOMContentLoaded', () => {
 	var register_button = document.querySelector('#register');
 	var logout_button = document.querySelector('#logout');
 	var account_card = document.querySelector('#account');
+	var create_chanel_block = document.querySelector('#create-channel');
+	var join_channel_block = document.querySelector('#join-channel');
+	var join_conversation_block = document.querySelector('#join_conversation');
+	var create_channel_button = document.querySelector('#create_channel_button');
+	var join_channel_button = document.querySelector('#join_channe_button');
+	var start_conversation_button = document.querySelector('#start_conversation_button');
+	var handle_template = document.querySelector('#content').innerHTML;
+
+	start_conversation_button.addEventListener('click', function(){
+		console.log('I am joinning a conversation');
+	});
+
+	create_channel_button.addEventListener('click', function(){
+		console.log('I am creating a channel');
+	});
+
+	join_channel_button.addEventListener('click', function(){
+		console.log('I am joinning a channel');
+	});
+
+
+	console.log(handle_template);
+
+	var content = Handlebars.compile(handle_template);
+
+	console.log(content);
+
+	var data = content({name: "Cedirc", city: "New york city"});
+
+	console.log(data);
 
 	document.querySelector('#reg-email').onkeyup = () => {
 		const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

@@ -4,6 +4,7 @@
 	<title>{% block title %}{% endblock %}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<script src="/static/javascript/handlebars-v4.7.6.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -25,6 +26,11 @@
 			</div>
 		</footer>
 	</div>
+	<script id="content" type="text/x-handlebars-template">
+		<div>
+			<p>My name is {{name}} and I live in {{city}}</p>
+		</div>
+	</script>
 	<script type="text/javascript" src="/static/javascript/app.js"></script>
 </body>
 </html>

@@ -7,5 +7,5 @@ deploy:
   provider: heroku
   api_key: $HEROKU_API_KEY
   app: cd-messenger-001
-  run: python manager.py migrate
+  run: python manager.py db migrate
   on: master

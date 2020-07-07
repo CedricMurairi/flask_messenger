@@ -1,3 +1,7 @@
 #!/usr/bin/python3
 
-print("give me a bottle of rum!")
+from flask import Blueprint
+
+user = Blueprint("user", __name__, url_prefix="/user")
+
+from . import errors, views

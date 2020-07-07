@@ -174,3 +174,12 @@ input:focus{
 	box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 	background-color: #283E4A;
 }
+
+#channel-creation, #join-channel, #join-conversation{
+	display: none;
+}
+
+#start_conversation_button, #create_channel_button, #join_channe_button{
+	cursor: pointer;
+	font-weight: bold;
+}
