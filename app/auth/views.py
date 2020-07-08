@@ -15,8 +15,8 @@ def login():
 		print(email, password)
 		try:
 			user = User.query.filter_by(email=email, password=password).first()
-		except error:
-			print(error)
+		except Exception as e:
+			print(e)
 		if user is None:
 			flash('Something wrong with you credential')
 			return redirect(url_for('.login'))

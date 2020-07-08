@@ -31,41 +31,9 @@
 			</div>
 		</div>
 		<div id="main-screen">
-			{% for message in get_flashed_messages() %}
+			<!-- {% for message in get_flashed_messages() %}
 				<h3 class="flash_message">{{ message }}</h3>
-			{% endfor %}
-			<div id="channel-creation">
-				<h3>Create a new chanel</h3>
-				<hr>
-				<form action="{{url_for('user.create_channel', username='cedric murairi')}}" method="POST">
-					<input type="text" name="channel_name" placeholder="Enter channel name">
-					<input type="text" name="channel_description" placeholder="Enter channel description">
-					<button type="submit">Create</button>
-				</form>
-			</div>
-			<div id="join-channel">
-				<h3>Join a chanel</h3>
-				<hr>
-				<!-- perform a search on key down to desplay the matching channels -->
-				<input type="search" name="search_channel">
-				<button type="submit">Search</button>
-				<hr>
-				<h3>Relevant channels</h3>
-				<div id="search_channel_list">
-					<!-- query for all the existing channels and display their na and desctiption | only the first 10 then a view more botton -->
-				</div>
-			</div>
-			<div id="join-conversation">
-				<h3>Start an new conversation</h3>
-				<hr>
-				<!-- perform a search on key down to desplay the matching names | account -->
-				<input type="search" name="search_people">
-				<button type="submit">Search</button>
-				<h3>Relevant people</h3>
-				<div id="search_people_list">
-					<!-- query for all the existing user and display their name and details | only the first 10 then a view more botton -->
-				</div>
-			</div>
+			{% endfor %} -->
 		</div>
 	</div>
 {% endblock %}

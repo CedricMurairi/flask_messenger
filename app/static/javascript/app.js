@@ -1,15 +1,20 @@
 // alert('Hello I am here for you sir');
 document.addEventListener('DOMContentLoaded', () => {
 
+	// window.onpopstate() = function(){
+	// 	console.log('state poped');
+	// }
+
 	var login_block = document.querySelector('#login-block');
 	var registration_block = document.querySelector('#registration-block');
 	var main_container = document.querySelector('#main-container');
+	var main_screen = document.querySelector('#main-screen');
 	var signin_button = document.querySelector('#signin');
 	var register_button = document.querySelector('#register');
 	var logout_button = document.querySelector('#logout');
 	var account_card = document.querySelector('#account');
 	var create_chanel_block = document.querySelector('#create-channel');
-	var join_channel_block = document.querySelector('#join-channel');
+	var join_conversation_block = document.querySelector('#join_conversation');
 	var join_conversation_block = document.querySelector('#join_conversation');
 	var create_channel_button = document.querySelector('#create_channel_button');
 	var join_channel_button = document.querySelector('#join_channe_button');
@@ -17,27 +22,40 @@ document.addEventListener('DOMContentLoaded', () => {
 	var handle_template = document.querySelector('#content').innerHTML;
 
 	start_conversation_button.addEventListener('click', function(){
-		console.log('I am joinning a conversation');
+		var response = make_request('GET', '/user/conversation', 'Start Conversation');
 	});
 
 	create_channel_button.addEventListener('click', function(){
-		console.log('I am creating a channel');
+		var response = make_request('GET', '/user/create-channel', 'Create Channel');
+
 	});
 
 	join_channel_button.addEventListener('click', function(){
-		console.log('I am joinning a channel');
+		var response = make_request('GET', '/user/join-channel', 'Join Channel');
 	});
 
 
-	console.log(handle_template);
+	function make_request(method, url, name){
+		const request = new XMLHttpRequest();
 
-	var content = Handlebars.compile(handle_template);
+		request.open(method, url);
 
-	console.log(content);
+		request.onload = function(){
+			if (request.readyState == XMLHttpRequest.DONE){
+				if(request.status == 200){
+					const response = request.responseText;
+					main_screen.innerHTML = `<div>${response}</div>`;
+					history.pushState(response, name, url)
+				}else{
+					console.log('Doing bad');
+				}
+			}
+		}
 
-	var data = content({name: "Cedirc", city: "New york city"});
+		request.send()
 
-	console.log(data);
+		return false;
+	}
 
 	document.querySelector('#reg-email').onkeyup = () => {
 		const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

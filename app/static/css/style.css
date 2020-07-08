@@ -71,7 +71,7 @@ hr{
 	background-color: black;
 }
 
-.button{
+.button, button{
 	padding: 5px 5px;
 	border-radius: 5px;
 	box-shadow: 1px 1px 4px black;
@@ -80,6 +80,12 @@ hr{
 	cursor: pointer;
 	font-weight: bolder;
 	color: rgba(255, 255, 255, 0.8);
+}
+
+button{
+	outline: none;
+	border: none;
+	background-color: #283E4A;
 }
 
 .clear-blue{
@@ -91,7 +97,7 @@ hr{
 	padding: 50px;
 }
 
-input[type='text'], input[type='email'], input[type='password']{
+input[type='text'], input[type='email'], input[type='password'], input[type='search']{
 	width: 300px;
 	padding: 5px 20px;
 	margin: 5px 0px;
@@ -148,6 +154,16 @@ input:focus{
 
 #main-screen{
 	flex: 3;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+#join_channel, #channel_creation, #join_conversation{
+	margin: 10px 5px;
+}
+
+#main_creen hr{
+	margin: 10px 0px;
 }
 
 #aside-card{
@@ -173,10 +189,6 @@ input:focus{
 	color: white;
 	box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 	background-color: #283E4A;
-}
-
-#channel-creation, #join-channel, #join-conversation{
-	display: none;
 }
 
 #start_conversation_button, #create_channel_button, #join_channe_button{
