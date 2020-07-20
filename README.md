@@ -1,3 +1,3 @@
-# Project 2
+# Flask Messenger
 
-Web Programming with Python and JavaScript
+The core functionality of this application is same as slack in spirit with our own touches and customizations.
