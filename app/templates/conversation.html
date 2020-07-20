@@ -2,8 +2,10 @@
 	<h3>Start an new conversation</h3>
 	<hr>
 	<!-- perform a search on key down to desplay the matching names | account -->
-	<input type="search" name="search_people" placeholder="Type in a name of some people">
-	<button type="submit">Search</button>
+	<div class="fake-container">
+		<input type="search" name="search_people" placeholder="Type in a name of some people">
+		<button type="submit" id="search_people_button" disabled>Search</button>
+	</div>
 	<h3>Relevant people</h3>
 	<div id="search_people_list">
 		<!-- query for all the existing user and display their name and details | only the first 10 then a view more botton -->
