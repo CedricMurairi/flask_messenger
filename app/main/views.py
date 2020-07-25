@@ -3,7 +3,7 @@ from flask import render_template, url_for, request, session, jsonify, flash, re
 from ..models import User
 
 
-@main.route('/', methods=['GET','POST'])
+@main.route('/', methods=['GET'])
 def index():
 	if session.get('user'):
 		username = session.get('username')

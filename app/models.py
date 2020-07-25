@@ -9,13 +9,14 @@ class User(db.Model):
 	username = db.Column(db.String(64))
 	email = db.Column(db.String(64))
 	password = db.Column(db.String(64))
-	joined = db.Column(db.DateTime)
-	own_channel = db.Column(db.Integer, db.ForeignKey('channels.id'))
+	joined = db.Column(db.DateTime, default=datetime.utcnow)
+	channel = db.Column(db.Integer, db.ForeignKey('channels.id'))
 
 
 class Channel(db.Model):
 	__tablename__ = 'channels'
 	id = db.Column(db.Integer, primary_key=True)
+	channel_creator = db.Column(db.Integer, db.ForeignKey('users.id'))
+	channel_creation = db.Column(db.DateTime, default=datetime.utcnow)
 	name = db.Column(db.String(100))
 	description = db.Column(db.Text())
-	users = db.relationship('User', backref='Channel', lazy='dynamic')
