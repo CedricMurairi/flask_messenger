@@ -77,136 +77,136 @@ document.addEventListener('DOMContentLoaded', () => {
 // TODO: Clean up the code with clear and consise methods
 
 
-	var valid_password = false;
-	var matching_password = false;
-	var valid_email = false;
-	var valid_name = false;
-	var valid_login_email = false;
-	var valid_login_password = false;
-	var channel_name_value = false;
-	var channel_description_value = false;
+	// var valid_password = false;
+	// var matching_password = false;
+	// var valid_email = false;
+	// var valid_name = false;
+	// var valid_login_email = false;
+	// var valid_login_password = false;
+	// var channel_name_value = false;
+	// var channel_description_value = false;
 
-	document.querySelector('#channel_name').onkeyup =  () => {
-		if(document.querySelector('#channel_name').value.lenght > 0) {
-			channel_name_value = true;
-			start_channel_button.disabled = false;
-			// if(channel_description_value && channel_description_value) {
-			// 	start_channel_button.disabled = false;
-			// }
-			// else{
-			// 	start_channel_button.disabled = true;
-			// }
-		}
-		else{
-			start_channel_button.disabled = true;
-		}
-	}
+	// document.querySelector('#channel_name').onkeyup =  () => {
+	// 	if(document.querySelector('#channel_name').value.lenght > 0) {
+	// 		channel_name_value = true;
+	// 		start_channel_button.disabled = false;
+	// 		// if(channel_description_value && channel_description_value) {
+	// 		// 	start_channel_button.disabled = false;
+	// 		// }
+	// 		// else{
+	// 		// 	start_channel_button.disabled = true;
+	// 		// }
+	// 	}
+	// 	else{
+	// 		start_channel_button.disabled = true;
+	// 	}
+	// }
 
-	document.querySelector('#channel_description').onkeyup =  () => {
-		if(document.querySelector('#channel_description').value.length > 0) {
-			channel_description_value = true;
-			start_channel_button.disabled = false;
-			// if(channel_description_value && channel_description_value) {
-			// 	start_channel_button.disabled = false;
-			// }
-			// else{
-			// 	start_channel_button.disabled = true;
-			// }
-		}
-		else{
-			start_channel_button.disabled = true;
-		}
-	}
+	// document.querySelector('#channel_description').onkeyup =  () => {
+	// 	if(document.querySelector('#channel_description').value.length > 0) {
+	// 		channel_description_value = true;
+	// 		start_channel_button.disabled = false;
+	// 		// if(channel_description_value && channel_description_value) {
+	// 		// 	start_channel_button.disabled = false;
+	// 		// }
+	// 		// else{
+	// 		// 	start_channel_button.disabled = true;
+	// 		// }
+	// 	}
+	// 	else{
+	// 		start_channel_button.disabled = true;
+	// 	}
+	// }
 
-	document.querySelector('#log-email').onkeyup =  () => {
-		const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-		if(document.querySelector('#log-email').value.match(validEmailFormat)) {
-			valid_login_email = true;
-			if(valid_login_email && valid_login_password) {
-				signin_button.disabled = false;
-			}
-			else{
-				signin_button.disabled = true;
-			}
-		}
-		else{
-			signin_button.disabled = true;
-		}
-	}
+	// document.querySelector('#log-email').onkeyup =  () => {
+	// 	const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	// 	if(document.querySelector('#log-email').value.match(validEmailFormat)) {
+	// 		valid_login_email = true;
+	// 		if(valid_login_email && valid_login_password) {
+	// 			signin_button.disabled = false;
+	// 		}
+	// 		else{
+	// 			signin_button.disabled = true;
+	// 		}
+	// 	}
+	// 	else{
+	// 		signin_button.disabled = true;
+	// 	}
+	// }
 
-	document.querySelector('#log-password').onkeyup =  () => {
-		const validPasswordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
-		if(document.querySelector('#log-password').value.match(validPasswordFormat)) {
-			valid_login_password = true;
-			if(valid_login_email && valid_login_password) {
-				signin_button.disabled = false;
-			}
-			else{
-				signin_button.disabled = true;
-			}
-		}
-		else{
-			signin_button.disabled = true;
-		}
-	}
+	// document.querySelector('#log-password').onkeyup =  () => {
+	// 	const validPasswordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
+	// 	if(document.querySelector('#log-password').value.match(validPasswordFormat)) {
+	// 		valid_login_password = true;
+	// 		if(valid_login_email && valid_login_password) {
+	// 			signin_button.disabled = false;
+	// 		}
+	// 		else{
+	// 			signin_button.disabled = true;
+	// 		}
+	// 	}
+	// 	else{
+	// 		signin_button.disabled = true;
+	// 	}
+	// }
 
-	document.querySelector('#reg-email').onkeyup = () => {
-		console.log("key Up");
-		const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-		if (document.querySelector('#reg-email').value.match(validEmailFormat)) {
-			document.querySelector('#correct-email-error').style.color = "green";
-			valid_email = true;
-			if(valid_email && valid_password && matching_password){
-				registration_button.disabled = false;
-			}
-			else{
-				registration_button.disabled = true;
-			}
-		}
-		else {
-			document.querySelector('#correct-email-error').style.color = "red";
-			valid_email = false;
-			registration_button.disabled = true;
+	// document.querySelector('#reg-email').onkeyup = () => {
+	// 	console.log("key Up");
+	// 	const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	// 	if (document.querySelector('#reg-email').value.match(validEmailFormat)) {
+	// 		document.querySelector('#correct-email-error').style.color = "green";
+	// 		valid_email = true;
+	// 		if(valid_email && valid_password && matching_password){
+	// 			registration_button.disabled = false;
+	// 		}
+	// 		else{
+	// 			registration_button.disabled = true;
+	// 		}
+	// 	}
+	// 	else {
+	// 		document.querySelector('#correct-email-error').style.color = "red";
+	// 		valid_email = false;
+	// 		registration_button.disabled = true;
 
-		}
-	}
+	// 	}
+	// }
 
-	document.querySelector('#reg-password').onkeyup = () => {
-		const validPasswordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
-		if (document.querySelector('#reg-password').value.match(validPasswordFormat)) {
-			document.querySelector('#correct-password-error').style.color = "green";
-			valid_password = true;
-			if(valid_email && valid_password && matching_password){
-				registration_button.disabled = false;
-			}
-			else{
-				registration_button.disabled = true;
-			}
-		}
-		else {
-			document.querySelector('#correct-password-error').style.color = "red";
-			valid_password = false;
-			registration_button.disabled = true;
-		}
-	}
+	// document.querySelector('#reg-password').onkeyup = () => {
+	// 	const validPasswordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
+	// 	if (document.querySelector('#reg-password').value.match(validPasswordFormat)) {
+	// 		document.querySelector('#correct-password-error').style.color = "green";
+	// 		valid_password = true;
+	// 		if(valid_email && valid_password && matching_password){
+	// 			registration_button.disabled = false;
+	// 		}
+	// 		else{
+	// 			registration_button.disabled = true;
+	// 		}
+	// 	}
+	// 	else {
+	// 		document.querySelector('#correct-password-error').style.color = "red";
+	// 		valid_password = false;
+	// 		registration_button.disabled = true;
+	// 	}
+	// }
 
-	document.querySelector('#reg-password-repeat').onkeyup = () => {
-		if (document.querySelector("#reg-password").value == document.querySelector('#reg-password-repeat').value) {
-			document.querySelector('#password-match-error').style.color = "green";
-			matching_password = true;
-			if(valid_email && valid_password && matching_password){
-				registration_button.disabled = false;
-			}
-			else{
-				registration_button.disabled = true;
-			}
-		}
-		else {
-			document.querySelector('#password-match-error').style.color = "red";
-			matching_password = false;
-			registration_button.disabled = true;
-		}
-	}
+	// document.querySelector('#reg-password-repeat').onkeyup = () => {
+	// 	if (document.querySelector("#reg-password").value == document.querySelector('#reg-password-repeat').value) {
+	// 		document.querySelector('#password-match-error').style.color = "green";
+	// 		matching_password = true;
+	// 		if(valid_email && valid_password && matching_password){
+	// 			registration_button.disabled = false;
+	// 		}
+	// 		else{
+	// 			registration_button.disabled = true;
+	// 		}
+	// 	}
+	// 	else {
+	// 		document.querySelector('#password-match-error').style.color = "red";
+	// 		matching_password = false;
+	// 		registration_button.disabled = true;
+	// 	}
+	// }
 
 });
 
