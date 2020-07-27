@@ -42,10 +42,11 @@
 			<h3>Create a new chanel</h3>
 			<hr>
 			<div class="fake-container">
-				<form action="{{url_for('user.create_channel', username='cedric murairi ')}}" method="POST">
+				<form id="create_channel_form" data-form="create_channel" onsubmit="event.preventDefault();submit_form(this)">
 					<input type="text" id="channel_name" name="channel_name" placeholder="Enter channel name"><br>
 					<input type="text" id="channel_description" name="channel_description" placeholder="Enter channel description"><br>
-					<button type="submit" id="start_channel_button" disabled>Create</button>
+				<!-- remove disabled but should be put back -->
+					<button type="submit" id="start_channel_button">Create</button>
 				</form>
 			</div>
 		</div>
@@ -57,7 +58,8 @@
 			<!-- perform a search on key down to desplay the matching names | account -->
 			<div class="fake-container">
 				<input type="search" name="search_people" placeholder="Type in a name of some people">
-				<button type="submit" id="search_people_button" disabled>Search</button>
+				<!-- remove disabled but should be put back -->
+				<button type="submit" id="search_people_button">Search</button>
 			</div>
 			<h3>Relevant people</h3>
 			<div id="search_people_list">
@@ -72,7 +74,8 @@
 			<!-- perform a search on key down to desplay the matching channels -->
 			<div class="fake-container">
 				<input type="search" name="search_channel" placeholder="Type in the name of the channel">
-				<button type="submit" id="search_channel_button" disabled>Search</button>
+				<!-- remove disabled but should be put back -->
+				<button type="submit" id="search_channel_button">Search</button>
 			</div>
 			<hr>
 			<h3>Relevant channels</h3>

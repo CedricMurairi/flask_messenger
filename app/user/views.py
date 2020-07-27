@@ -10,6 +10,7 @@ from .. import db
 @user.route("/create-channel", methods=['GET', 'POST'])
 def create_channel():
 	if request.method == 'POST':
+		print('Hey there, here is the post from create-channel route')
 		channel_name = request.form.get('channel_name')
 		channel_description = request.form.get('channel_description')
 		username = session.get('username')
@@ -26,8 +27,9 @@ def create_channel():
 @user.route("/join-channel", methods=['GET', 'POST'])
 def join_channel():
 	if request.method == 'POST':
+		print('Hey there, here is the post from join-channel route')
 		channel_name = request.form.get('search_channel')
-		channels = Channel.query,filter_by(name=channel_name).all()
+		channels = Channel.query,filter_by(name=channel_name).first()
 		if(channels):
 			for channel in channels:
 				print(channel.description)
@@ -38,5 +40,6 @@ def join_channel():
 @user.route("/conversation", methods=['GET', 'POST'])
 def conversation():
 	if request.method == 'POST':
+		print('Hey there, here is the post from conversation route')
 		return jsonify({'response': 'Post content recieved'})
 	return redirect(url_for('index'))
