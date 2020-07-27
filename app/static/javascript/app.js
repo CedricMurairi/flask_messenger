@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	console.log(test_template({'age': 20, 'name': 'Yves Shouenard', 'city': 'Las Vegas'}));
 
+// compiling tamplates with handlebars to be used in the channel creation, join and conversation start point
 	const create_channel_template = Handlebars.compile(document.querySelector('#channel-creation').innerHTML);
 	const join_channel_template = Handlebars.compile(document.querySelector('#join-channel').innerHTML);
 	const join_conversation_template = Handlebars.compile(document.querySelector('#join-conversation').innerHTML);
@@ -48,15 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	window.addEventListener('click', async function(event){
 		if(event.target == start_conversation_button){
-			// document.querySelector('#main-screen').innerHTML = join_conversation_template();
 			var response = make_get_request('/user/conversation', 'Start Conversation', join_conversation_template());
 		}
 		if(event.target == create_channel_button){
-			// document.querySelector('#main-screen').innerHTML = create_channel_template();
 			make_get_request('/user/create-channel', 'Create Channel', create_channel_template());
 		}
 		if(event.target == join_channel_button){
-			// document.querySelector('#main-screen').innerHTML = join_channel_template();
 			make_get_request('/user/join-channel', 'Join Channel', join_channel_template());
 		}
 	});
@@ -200,31 +198,47 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function submit_form(element){
-	var formData = element.dataset.form;
+	// accessing the form data *data-form* to check the type of form being submitted
+	let formData = element.dataset.form;
 
+// make request to create channel
 	if(formData == 'create_channel'){
-		console.log('hello');
-		if(channel_description !== null && channel_name !== null){
-			var channelDescription = channel_description.value;
-			var channelCreationName = channel_name.value;
-			console.log(channelDescription + channelCreaction);
-		}
-		// make_post_request('/user/create-channel');
+
+		// getting the respective values submitted with the channel-creation form
+		let channelCreationName = element[0].value;
+		let channelDescription = element[1].value;
+		let keyTerm = ['channel_name', 'channel_description'];
+		let data = [channelCreationName, channelDescription];
+
+		let result = make_post_request('/user/create-channel', keyTerm, data);
+		console.log(result);
 	}
 
+// make request to search for people on the platform
 	if(formData == 'search_people'){
-		make_post_request('/user/conversation');
+
+		let search_people_name = element[0].value;
+		let keyTerm = ['search_people'];
+		let data = [search_people_name];
+
+		make_post_request('/user/conversation', keyTerm, data);
 	}
 
+// make request to search for existing channels to join
 	if(formData == 'search_channel'){
-		make_post_request('/user/join-channel');
+
+		let search_channel = element[0].value;
+		let keyTerm = ['search_channel'];
+		let data = [search_channel];
+
+		make_post_request('/user/join-channel', keyTerm, data);
 	}
 
 	return false;
 }
 
 
-function make_post_request(url, data){
+function make_post_request(url, keyTerm, dataValue){
 	const request = new XMLHttpRequest();
 	let response; 
 
@@ -238,6 +252,7 @@ function make_post_request(url, data){
 				response = request.responseText;
 				console.log(response);
 				console.log('Request passed');
+				return response
 				// document.querySelector('#main-screen').innerHTML = template;
 			}else{
 				console.log('Doing bad');
@@ -248,8 +263,15 @@ function make_post_request(url, data){
 	console.log('Sending request');
 
 
-	var data = new FormData();
-	data.append(keyTerm, dataValue);
+	const data = new FormData();
+
+// loop over the parameters passed to the function and append them to the data object to send with the request
+	for (var i = 0; i < keyTerm.length; i++) {
+		for (var j = i; j < dataValue.length; j++) {
+			data.append(keyTerm[i], dataValue[i]);
+			break;
+		}
+	}
 
 	request.send(data);
 
