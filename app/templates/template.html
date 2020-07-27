@@ -57,9 +57,11 @@
 			<hr>
 			<!-- perform a search on key down to desplay the matching names | account -->
 			<div class="fake-container">
-				<input type="search" name="search_people" placeholder="Type in a name of some people">
-				<!-- remove disabled but should be put back -->
-				<button type="submit" id="search_people_button">Search</button>
+				<form id="join_conversation_form" data-form="search_people" onsubmit="event.preventDefault();submit_form(this)">
+					<input type="search" name="search_people" placeholder="Type in a name of some people">
+					<!-- remove disabled but should be put back -->
+					<button type="submit" id="search_people_button">Search</button>
+				</form>
 			</div>
 			<h3>Relevant people</h3>
 			<div id="search_people_list">
@@ -73,6 +75,7 @@
 			<hr>
 			<!-- perform a search on key down to desplay the matching channels -->
 			<div class="fake-container">
+				<form id="join_channel_form" data-form="search_channel" onsubmit="event.preventDefault();submit_form(this)">
 				<input type="search" name="search_channel" placeholder="Type in the name of the channel">
 				<!-- remove disabled but should be put back -->
 				<button type="submit" id="search_channel_button">Search</button>
