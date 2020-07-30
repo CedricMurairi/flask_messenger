@@ -26,6 +26,10 @@ footer{
 	color: rgba(255, 255, 255, 0.3);
 }
 
+nav{
+	position: relative;
+}
+
 #logo{
 	font-weight: bolder;
 	font-size: 25px;
@@ -42,6 +46,51 @@ ul{
 
 li{
 	display: inline-block;
+}
+
+.hide{
+	display: none;
+}
+
+#channel_title, #conversation_title{
+	color: white;
+	border-radius: 5px;
+	font-weight: bold;
+	background-color: #283E4A;
+}
+
+#channel_title:hover, #conversation_title:hover{
+	cursor: pointer;
+}
+
+#channels, #conversations{
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+}
+
+#user_profile_option_card{
+	border-radius: 5px;
+	background-color: white;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+	padding: 20px 0px;
+	position: absolute;
+	top: 40px;
+	right: 20px;
+	z-index: 200;
+}
+
+#user_profile_option_card p{
+	padding: 5px 20px;
+	color: #283E4A;
+	font-weight: bold;
+}
+
+nav a {
+	text-decoration: none;
+}
+
+#user_profile_option_card p:hover{
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
 #main-section{
@@ -69,6 +118,10 @@ hr{
 	height: 3px;
 	opacity: 0.2;
 	background-color: black;
+}
+
+#down{
+	margin-top: 5px;
 }
 
 .button, button{
@@ -183,10 +236,6 @@ h3{
 #aside-card #up p, #aside-card #down p{
 	padding: 5px 10px;
 	margin-bottom: 5px;
-}
-
-#aside-card #down p{
-	background-color: white;
 }
 
 #aside-card #up p{
