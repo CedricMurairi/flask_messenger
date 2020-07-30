@@ -14,6 +14,11 @@
 				{{username}}
 			</li>
 		</ul>
+		<div id="user_profile_option_card" class="hide">
+			<a href="{{ url_for('user.profile', username='{{username}}') }}"><p>Profile</p></a>
+			<a href="{{ url_for('user.settings', username='{{username}}') }}"><p>Settings</p></a>
+			<a href="{{ url_for('auth.logout') }}"><p>LogOut</p></a>
+		</div>
 	</nav>
 {% endblock %}
 {% block body %}
@@ -26,8 +31,38 @@
 			</div>
 			<hr>
 			<div id="down">
-				<p>Chanels</p>
-				<p>Conversation</p>
+				<div>
+					<p id="channel_title">Chanels</p>
+					<div id="channels" class="hide">
+						{% for channel in channels %}
+							<div id="channel_card">
+								<p>{{channel.name}}</p>
+								<p>{{channel.description}}</p>
+							</div>
+						{% endfor %}
+						<div id="channel_card">
+							<p>Here is the channel card</p>
+						</div>
+					</div>
+				</div>
+				<div>
+					<p id='conversation_title'>Conversation</p>
+					<div id="conversations" class="hide">
+						{% for user in conversation_users %}
+							<div id="user_conversation_card">
+								<p>{{user.username}}</p>
+								{% if user.is_active %}
+									<p>Active now</p>
+								{% else %}
+									<p>Active last {{user.active_since}}</p>
+								{% endif %}
+							</div>
+						{% endfor %}
+						<div id="channel_card">
+							<p>Here is the channel card</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="main-screen">
