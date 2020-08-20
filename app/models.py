@@ -10,8 +10,27 @@ class User(db.Model):
 	email = db.Column(db.String(64))
 	password = db.Column(db.String(64))
 	joined = db.Column(db.DateTime, default=datetime.utcnow)
+	is_active = db.Column(db.Boolean, default=False)
+	last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 	channel = db.Column(db.Integer, db.ForeignKey('channels.id'))
 
+class MessageUser(db.Model):
+	__tablename__ = 'usermessage'
+	id = db.Column(db.Integer, primary_key=True)
+	to_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	from_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	message = db.Column(db.Text())
+	sent = db.Column(db.DateTime, default=datetime.utcnow)
+	read = db.Column(db.Boolean, default=False)
+
+class MessageChannel(db.Model):
+	__tablename__ = 'channelmessage'
+	id = db.Column(db.Integer, primary_key=True)
+	to_channel_id = db.Column(db.Integer, db.ForeignKey('channels.id'))
+	from_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	message = db.Column(db.Text())
+	sent = db.Column(db.DateTime, default=datetime.utcnow)
+	read = db.Column(db.Boolean, default=False)
 
 class Channel(db.Model):
 	__tablename__ = 'channels'
