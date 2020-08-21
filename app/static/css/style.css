@@ -64,8 +64,34 @@ li{
 }
 
 #channels, #conversations{
+	/*background-color: rgba(0, 0, 0, 0.1);*/
+	height: 50%;
+	overflow: scroll;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+/*#conversations{
+	background-color: rgba(0, 0, 0, 0.1);
+	height: 50%;
+	overflow: scroll;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;  make scrollbar transparent 
+}*/
+
+.user_conversation_card, .channel_card{
+	padding: 5px;
 	background-color: rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
+	margin: 5px 0px 0px 0px;
+}
+
+.user_conversation_card:hover, .channel_card:hover{
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 #user_profile_option_card{
@@ -120,8 +146,22 @@ hr{
 	background-color: black;
 }
 
+#channel-card-join, #start_conversation_card{
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+	padding: 5px 10px;
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
 #down{
 	margin-top: 5px;
+	height: 70%;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 
 .button, button{
@@ -190,14 +230,15 @@ input:focus{
 }
 
 .flash_message{
+	padding: 0px;
+	margin: 0px;
 	width: fit-content;
 	padding: 10px 20px;
 	border-radius: 5px;
-	border: 1px solid grey;
-	margin-top: 5px;
-	font-weight: bold;
-	font-family: Helvetica;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	margin: 0px 0px 20px 0px;
 	letter-spacing: 1px;
+	color: rgba(0, 0, 0, 0.4);
 }
 
 #main-container{
@@ -221,7 +262,7 @@ hr{
 }
 
 h3{
-	margin: 0px 0px 0px 10px;
+	margin: 0px 0px 0px 0px;
 }
 
 #aside-card{
@@ -230,7 +271,7 @@ h3{
 }
 
 #aside-card #up, #aside-card #down{
-	height: 50%;
+	height: 30%;
 }
 
 #aside-card #up p, #aside-card #down p{
