@@ -1,19 +1,10 @@
+// 
 
-// var create_channel_form = document.querySelector('#create_channel_form');
-// if(create_channel_form !== null){
-// 	create_channel_form.onsubmit = (event) => {
-// 		event.preventDefault();
-// 		alert('Still hope here');
-// 		console.log('submitted');
-
-// 		return false;
-		
-// 	};
-// }
 var login_block = document.querySelector('#login-block');
 var registration_block = document.querySelector('#registration-block');
 var main_container = document.querySelector('#main-container');
 var main_screen = document.querySelector('#main-screen');
+var profile_option_card = document.querySelector('#user_profile_option_card');
 var register_button = document.querySelector('#register');
 var logout_button = document.querySelector('#logout');
 var account_card = document.querySelector('#account');
@@ -28,6 +19,15 @@ var channel_description = document.querySelector('#channel_description');
 // var create_channel_form = document.querySelector('#create_channel_form');
 var registration_button = document.querySelector('#registration_button');
 var signin_button = document.querySelector('#signin_button');
+var channel_title = document.querySelector('#channel_title');
+var conversation_title = document.querySelector('#conversation_title');
+var channel_list = document.querySelector('#channels');
+var conversation_list = document.querySelector('#conversations');
+var search_people_list = document.querySelector('#search_people_list');
+const channel_card_join = Handlebars.compile(document.querySelector('#channel_card_join_template').innerHTML);
+const start_conversation_card = Handlebars.compile(document.querySelector('#start_conversation_card_template').innerHTML);
+const button_join_channel_card = document.querySelector('#join-channel-via-card-button');
+const button_join_conversation_card = document.querySelector('#start-conversation-via-card-button');
 
 	
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	const join_channel_template = Handlebars.compile(document.querySelector('#join-channel').innerHTML);
 	const join_conversation_template = Handlebars.compile(document.querySelector('#join-conversation').innerHTML);
 
-
 	window.onpopstate = function(event) {
 		main_screen.innerHTML = event.state['data'];
 	};
@@ -49,13 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	window.addEventListener('click', async function(event){
 		if(event.target == start_conversation_button){
-			var response = make_get_request('/user/conversation', 'Start Conversation', join_conversation_template());
+			var response = make_get_request('/user/conversation/user', 'Start Conversation', join_conversation_template());
 		}
 		if(event.target == create_channel_button){
 			make_get_request('/user/create-channel', 'Create Channel', create_channel_template());
 		}
 		if(event.target == join_channel_button){
-			make_get_request('/user/join-channel', 'Join Channel', join_channel_template());
+			make_get_request('/user/join-channel/channels', 'Join Channel', join_channel_template());
+		}
+		if(event.target == account_card){
+			profile_option_card.classList.toggle('hide');
+		}
+		if(event.target != profile_option_card && event.target != account_card){
+			profile_option_card.classList.add('hide');
+		}
+		if(event.target == channel_title){
+			channel_list.classList.toggle('hide');
+		}
+		if(event.target == conversation_title){
+			conversation_list.classList.toggle('hide');
 		}
 	});
 
@@ -221,7 +232,7 @@ function submit_form(element){
 		let keyTerm = ['search_people'];
 		let data = [search_people_name];
 
-		make_post_request('/user/conversation', keyTerm, data);
+		make_post_request('/user/conversation/user', keyTerm, data, start_conversation_card);
 	}
 
 // make request to search for existing channels to join
@@ -231,14 +242,34 @@ function submit_form(element){
 		let keyTerm = ['search_channel'];
 		let data = [search_channel];
 
-		make_post_request('/user/join-channel', keyTerm, data);
+		make_post_request('/user/join-channel/channels', keyTerm, data, channel_card_join);
 	}
 
 	return false;
 }
 
 
-function make_post_request(url, keyTerm, dataValue){
+function join_channel_via_button_click(element){
+	let id = element.dataset.channel;
+
+	let keyTerm = ['channel_id'];
+	let data = [id];
+
+	make_post_request('/user/join-channel/channels/join', keyTerm, data);
+}
+
+function join_conversation_via_button_click(element){
+	let id = element.dataset.user;
+	console.log(id);
+
+	let keyTerm = ['user_id'];
+	let data = [id];
+
+	make_post_request('/user/conversation/user/join', keyTerm, data);
+}
+
+
+function make_post_request(url, keyTerm, dataValue, template=null){
 	const request = new XMLHttpRequest();
 	let response; 
 
@@ -250,8 +281,10 @@ function make_post_request(url, keyTerm, dataValue){
 		if (request.readyState == XMLHttpRequest.DONE){
 			if(request.status == 200){
 				response = request.responseText;
-				console.log(response);
-				console.log('Request passed');
+				console.log(JSON.parse(response));
+				var data = JSON.parse(response);
+				console.log(data['data']);
+				(url == '/user/join-channel/channels') ? document.querySelector('#main-screen').innerHTML += template({'channel_id': data['data']['id'], 'channel_name': data['data']['name'], 'channel_description': data['data']['description'], 'channel_creation': data['data']['created']}) : (url == '/user/conversation/user') ? document.querySelector('#main-screen').innerHTML += template({user: data['response']}) : console.log('get you');
 				return response
 				// document.querySelector('#main-screen').innerHTML = template;
 			}else{
