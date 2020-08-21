@@ -4,6 +4,7 @@ from flask import render_template, jsonify, request, session, url_for, redirect,
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import auth
 from ..models import User
+from .forms import InitialForm
 from app import db
 import json
 
