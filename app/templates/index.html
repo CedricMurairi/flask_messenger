@@ -11,7 +11,7 @@
 		<ul id="buttons">
 			<a href="{{ url_for('auth.logout') }}"><li id="logout" class="button">LogOut</li></a>
 			<li id="account" class="button clear-blue">
-				{{username}}
+				{{user.username}}
 			</li>
 		</ul>
 		<div id="user_profile_option_card" class="hide">
@@ -34,22 +34,27 @@
 				<div>
 					<p id="channel_title">Chanels</p>
 					<div id="channels" class="hide">
-						{% for channel in channels %}
-							<div id="channel_card">
-								<p>{{channel.name}}</p>
-								<p>{{channel.description}}</p>
+						{% for channel in channel_created %}
+							<div class="channel_card" data-id={{channel.id}}>
+								<h5>{{channel.name}}</h5>
+								<h6>{{channel.description}}</h6>
+								<h6>Created: {{ (channel.channel_creation) }}
 							</div>
 						{% endfor %}
-						<div id="channel_card">
-							<p>Here is the channel card</p>
-						</div>
+						{% for channel in channel_joined %}
+							<div class="channel_card" data-id={{channel.id}}>
+								<h5>{{channel.name}}</h5>
+								<h6>{{channel.description}}</h6>
+								<h6>Created: {{ (channel.channel_creation) }}
+							</div>
+						{% endfor %}
 					</div>
 				</div>
 				<div>
 					<p id='conversation_title'>Conversation</p>
 					<div id="conversations" class="hide">
 						{% for user in conversation_users %}
-							<div id="user_conversation_card">
+							<div class="user_conversation_card" id="user_conversation_card" data-id={{user.id}}>
 								<p>{{user.username}}</p>
 								{% if user.is_active %}
 									<p>Active now</p>
@@ -58,9 +63,6 @@
 								{% endif %}
 							</div>
 						{% endfor %}
-						<div id="channel_card">
-							<p>Here is the channel card</p>
-						</div>
 					</div>
 				</div>
 			</div>
