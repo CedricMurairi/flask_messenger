@@ -1,0 +1,29 @@
+{% extends 'template.html' %}
+
+
+{% block title %}Home Page{% endblock %}
+
+{% block header %}
+	<div id="logo">
+		Flask Messenger
+	</div>
+	<nav>
+		<ul id="buttons">
+			<a href="{{ url_for('auth.logout') }}"><li id="logout" class="button">LogOut</li></a>
+			<li id="account" class="button clear-blue">
+				{{user.username}}
+			</li>
+		</ul>
+		<div id="user_profile_option_card" class="hide">
+			<a href="{{ url_for('user.profile', username=user.username) }}"><p>Profile</p></a>
+			<a href="{{ url_for('user.settings', username=user.username) }}"><p>Settings</p></a>
+			<a href="{{ url_for('auth.logout') }}"><p>LogOut</p></a>
+		</div>
+	</nav>
+{% endblock %}
+{% block body %}
+	<div id="main-container">
+		<h3>This is a bad request nigga, check it out and try again letter</h3>
+		<button>Get back to home</button>
+	</div>
+{% endblock %}

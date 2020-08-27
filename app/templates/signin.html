@@ -14,15 +14,15 @@
 	</nav>
 {% endblock %}
 {% block body %}
-	{% for message in get_flashed_messages() %}
-		<h3 class="flash_message">{{ message }}</h3>
-	{% endfor %}
 	<section id="main-section">
 		<div id="login-block">
+			{% for message in get_flashed_messages() %}
+				<h3 class="flash_message">{{ message }}</h3>
+			{% endfor %}
 			<form id="login-form" method="POST" action="{{url_for('auth.login')}}">
 				<input id="log-email" type="email" name="email" placeholder="Enter your mail"><br>
 				<input id="log-password" type="password" name="password" placeholder="Enter your password"><br>
-				<!-- remove disabled but should be put back -->
+
 				<button type="submit" id="signin_button" class="submit-button">Login</button>
 			</form>
 		</div>

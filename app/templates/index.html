@@ -15,8 +15,8 @@
 			</li>
 		</ul>
 		<div id="user_profile_option_card" class="hide">
-			<a href="{{ url_for('user.profile', username='{{username}}') }}"><p>Profile</p></a>
-			<a href="{{ url_for('user.settings', username='{{username}}') }}"><p>Settings</p></a>
+			<a href="{{ url_for('user.profile', username=user.username) }}"><p>Profile</p></a>
+			<a href="{{ url_for('user.settings', username=user.username) }}"><p>Settings</p></a>
 			<a href="{{ url_for('auth.logout') }}"><p>LogOut</p></a>
 		</div>
 	</nav>
@@ -55,11 +55,11 @@
 					<div id="conversations" class="hide">
 						{% for user in conversation_users %}
 							<div class="user_conversation_card" id="user_conversation_card" data-id={{user.id}}>
-								<p>{{user.username}}</p>
+								<h5>{{user.username}}</h5>
 								{% if user.is_active %}
-									<p>Active now</p>
+									<h6>Active now</h6>
 								{% else %}
-									<p>Active last {{user.active_since}}</p>
+									<h6>Last seen: {{user.active_since}}</h6>
 								{% endif %}
 							</div>
 						{% endfor %}
@@ -87,6 +87,9 @@
 					<h3>Title 4</h3>
 				</div>
 			</div>
+		</div>
+		<div id="message-area" class="hide">
+			<h1>Here is the crazy area, welcome and join</h1>
 		</div>
 	</div>
 {% endblock %}

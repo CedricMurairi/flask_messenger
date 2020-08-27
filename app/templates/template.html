@@ -46,13 +46,13 @@
 	<script id="search_channel_card_detail" type="text/template">
 		
 	</script>
-	<script id="start_conversation_card" type="text/template">
+	<script id="start_conversation_card_template" type="text/template">
 		{% raw -%}
 			{{#each user}}
 				<div id="start_conversation_card">
 					<div>
 						<h4>{{this.username}}</h4>
-						<p>{{this.email}} | {{this.joined}}</p>
+						<p>{{this.email}} | Joined: {{this.joined}}</p>
 						{{# if this.is_active }}
 						<h6>Active now</h6>
 						{{ else }}
@@ -60,7 +60,7 @@
 						{{/ if }}
 					</div>
 					<div>
-						<button type="submit" id="join-channel-via-card-button">Start conversation</button>
+						<button type="submit" id="cedric" data-user="{{this.id}}" onclick="event.preventDefault();join_conversation_via_button_click(this)">Start conversation</button>
 					</div>
 				</div>
 			{{/each}}
@@ -118,16 +118,18 @@
 	</script>
 	<script id="channel_card_join_template" type="text/template">
 		{% raw -%}
-			<div id="channel-card-join">
-				<div>
-					<h4>{{channel_name}}</h4>
-					<p>{{channel_description}}</p>
-					<h6>Created: {{channel_creation}}</h6>
+			{{#each channel}}
+				<div id="channel-card-join">
+					<div>
+						<h4>{{this.name}}</h4>
+						<p>{{this.description}}</p>
+						<h6>Created: {{this.created}}</h6>
+					</div>
+					<div>
+						<button type="submit" data-channel="{{this.id}}" onclick="event.preventDefault();join_channel_via_button_click(this)">Join</button>
+					</div>
 				</div>
-				<div>
-					<button type="submit" id="join-channel-via-card-button">Join</button>
-				</div>
-			</div>
+			{{/each}}
 		{%- endraw %}
 	</script>
 	<script type="text/javascript" src="/static/javascript/app.js"></script>
