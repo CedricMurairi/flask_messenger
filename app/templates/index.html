@@ -4,9 +4,7 @@
 {% block title %}Home Page{% endblock %}
 
 {% block header %}
-	<div id="logo">
-		Flask Messenger
-	</div>
+	{{super()}}
 	<nav>
 		<ul id="buttons">
 			<a href="{{ url_for('auth.logout') }}"><li id="logout" class="button">LogOut</li></a>
@@ -35,14 +33,14 @@
 					<p id="channel_title">Chanels</p>
 					<div id="channels" class="hide">
 						{% for channel in channel_created %}
-							<div class="channel_card" data-id={{channel.id}}>
+							<div class="channel_card" data-id={{channel.id}} onclick="event.preventDefault();fetch_channel_messages(this.dataset.id)">
 								<h5>{{channel.name}}</h5>
 								<h6>{{channel.description}}</h6>
 								<h6>Created: {{ (channel.channel_creation) }}
 							</div>
 						{% endfor %}
 						{% for channel in channel_joined %}
-							<div class="channel_card" data-id={{channel.id}}>
+							<div class="channel_card" data-id={{channel.id}} onclick="event.preventDefault();fetch_channel_messages(this.dataset.id)">
 								<h5>{{channel.name}}</h5>
 								<h6>{{channel.description}}</h6>
 								<h6>Created: {{ (channel.channel_creation) }}
@@ -53,13 +51,13 @@
 				<div>
 					<p id='conversation_title'>Conversation</p>
 					<div id="conversations" class="hide">
-						{% for user in conversation_users %}
-							<div class="user_conversation_card" id="user_conversation_card" data-id={{user.id}}>
-								<h5>{{user.username}}</h5>
-								{% if user.is_active %}
+						{% for conversation_user in conversation_users %}
+							<div class="user_conversation_card" id="user_conversation_card" data-id={{conversation_user.id}} onclick="event.preventDefault();fetch_user_messages(this.dataset.id, '{{user.id}}')">
+								<h5>{{conversation_user.username}}</h5>
+								{% if conversation_user.is_active %}
 									<h6>Active now</h6>
 								{% else %}
-									<h6>Last seen: {{user.active_since}}</h6>
+									<h6>Last seen: {{conversation_user.active_since}}</h6>
 								{% endif %}
 							</div>
 						{% endfor %}
