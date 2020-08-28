@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
 from flask import request, jsonify, render_template ,redirect, url_for, session
-from ..models import User, Channel, Connection
+from ..models import User, Channel, Connection, MessageUser, MessageChannel
 from . import user
 from .. import db
+from sqlalchemy import and_, or_, func
 
 
 @user.route("/create-channel", methods=['GET', 'POST'])
@@ -35,12 +36,11 @@ def create_channel():
 def search_channel():
 	if request.method == 'POST':
 		print('Hey there, here is the post from join-channel route')
-		channel_name = request.form.get('search_channel')
-		channel = Channel.query.filter_by(name=channel_name).first()
+		channel_name = request.form.get('search_channel').lower()
+		channels = Channel.query.filter(func.lower(Channel.name).like('%' +channel_name+ '%')).all()
 
-		if(channel):
-			print(channel.description)
-			return jsonify({'response': True, 'data': {'id': channel.id, 'name': channel.name, 'description': channel.description, 'created': channel.channel_creation, 'creator': channel.channel_creator}})
+		if(channels):
+			return jsonify({'response': [{'id': channel.id, 'name': channel.name, 'description': channel.description, 'created': channel.channel_creation, 'creator': channel.channel_creator} for channel in channels]})
 
 		return jsonify({'response': 'No such a channel in our records'})
 
@@ -56,8 +56,9 @@ def join_channel():
 	if(channel):
 		username = session.get('username')
 		email = session.get('email')
-		user = User.query.filter_by(username=username, email=email).first()
-		user.joined_channel = channel.id
+		user = User.query.filter(and_(User.username==username, User.email==email)).first()
+		print(user.username, user.email)
+		user.channel_joined = channel.id
 		db.session.add(user)
 		db.session.commit()
 		return jsonify({'response': 'Channel joined successfully', 'data': {'name': channel.name, 'description': channel.description, 'created': channel.channel_creation, 'creator': channel.channel_creator}})
@@ -67,11 +68,13 @@ def join_channel():
 def search_user():
 
 	if request.method == 'POST':
-		search_user_name = request.form.get('search_people')
-		user = User.query.filter_by(username=search_user_name).all()
+		user_name = session.get('username')
+		user_email = session.get('email')
+		search_user_name = request.form.get('search_people').lower()
+		user = User.query.filter(and_(func.lower(User.username).like("%" +search_user_name+ "%"), User.username != user_name, User.email != user_email)).all()
 
 		if(user):
-			return jsonify({'response': [{'username': user.username, 'email': user.email, 'joined': user.joined, 'is_active': user.is_active, 'last_seen': user.last_seen} for user in user]})
+			return jsonify({'response': [{'id': user.id, 'username': user.username, 'email': user.email, 'joined': user.joined, 'is_active': user.is_active, 'last_seen': user.last_seen} for user in user]})
 
 		return jsonify({'response': 'No such a user in our records'})
 
@@ -89,16 +92,66 @@ def join_conversation():
 		connection = Connection(from_id=user.id, to_id=user_connection)
 		db.session.add(connection)
 		db.session.commit()
+
 		return jsonify({'response': 'Connection created successfully'})
+
+
+@user.route('/fetch/direct/messages', methods=['GET', 'POST'])
+def fetch_direct_message():
+
+	 if request.method == 'POST':
+	 	connection_id = request.form.get('connection_id')
+	 	current_user_id = request.form.get('current_user_id')
+	 	messages = MessageUser.query.filter(and_(or_(MessageUser.from_id==connection_id, MessageUser.to_id==connection_id), or_(MessageUser.from_id==current_user_id, MessageUser.to_id==current_user_id))).all()
+
+	 	if messages:
+	 		for message_item in messages:
+	 			print(message_item.id, message_item.message)
+
+	 		return {'response': [{'current_user': current_user_id, 'from_id': message.from_id, 'to_id': message.to_id, 'from_user': User.query.filter_by(id=message.from_id).first().username, 'to_user': User.query.filter_by(id=message.to_id).first().username, 'body': message.message, 'sent': message.sent} for message in messages]}
+
+	 	return {'response': 'There are no message thread for current user'}
+
+	 return redirect(url_for('index'))
+
+@user.route('/fetch/channel/messages', methods=['GET', 'POST'])
+def fetch_channel_message():
+
+	 if request.method == 'POST':
+	 	channel_id = request.form.get('channel_id')
+	 	messages = MessageChannel.query.filter_by(to_channel_id=channel_id).all()
+	 	username = session.get('username')
+	 	email = session.get('email')
+	 	current_user = User.query.filter(and_(User.username==username, User.email==email)).first()
+
+	 	if messages:
+		 	for message in messages:
+		 		print(message.from_id, message.message)
+	 		return {'response': [{'channel_name': Channel.query.filter_by(id=message.to_channel_id).first().name , 'current_user': current_user.id, 'from_id': message.from_id, 'from_user': User.query.filter_by(id=message.from_id).first().username, 'body': message.message, 'sent': message.sent} for message in messages]}
+	 	print('The channel id is:', channel_id)
+	 	return {'response': 'The server got your response for channel messages'}
+
+	 return redirect(url_for('index'))
+
+
+@user.route('/send/message', methods=['POST'])
+def send_message():
+
+	# message = MessageUser(from_id=, to_id=, message=)
+	# message = MessageChannel(from_id=, to_channel_id=, message=)
+
+	# db.session.add(message)
+	# db.session.commit()
+	return
 
 
 @user.route("/<string:username>/settings", methods=['GET', 'POST'])
 def settings(username):
 
-	return '<h2>Hello %s, here is your setting</h2>' %username
+	return render_template('under_dev.html', username=username)
 
 
 @user.route("/<string:username>/profile", methods=['GET', 'POST'])
 def profile(username):
 
-	return '<h2>Hello %s, here is your profile</h2>'  %username
+	return render_template('under_dev.html', username=username)
