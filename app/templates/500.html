@@ -4,26 +4,14 @@
 {% block title %}Home Page{% endblock %}
 
 {% block header %}
-	<div id="logo">
-		Flask Messenger
-	</div>
+	{{super()}}
 	<nav>
-		<ul id="buttons">
-			<a href="{{ url_for('auth.logout') }}"><li id="logout" class="button">LogOut</li></a>
-			<li id="account" class="button clear-blue">
-				{{user.username}}
-			</li>
-		</ul>
-		<div id="user_profile_option_card" class="hide">
-			<a href="{{ url_for('user.profile', username=user.username) }}"><p>Profile</p></a>
-			<a href="{{ url_for('user.settings', username=user.username) }}"><p>Settings</p></a>
-			<a href="{{ url_for('auth.logout') }}"><p>LogOut</p></a>
-		</div>
+		<!--  -->
 	</nav>
 {% endblock %}
 {% block body %}
-	<div id="main-container">
+	<div id="error-message">
 		<h3>This is an internal server error, try again later</h3>
-		<button>Get back to home</button>
+		<button><a href="{{url_for('index')}}">Get back to home</a></button>
 	</div>
 {% endblock %}
