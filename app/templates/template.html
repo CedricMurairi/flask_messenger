@@ -8,7 +8,11 @@
 <body>
 	<div id="wrapper">
 		<header>
-			{% block header %}{% endblock %}
+			{% block header %}
+				<div id="logo">
+					<a href="{{url_for('index')}}">Flask Messenger</a>
+				</div>
+			{% endblock %}
 		</header>
 
 		{% block body %}{% endblock %}
@@ -37,14 +41,82 @@
 			{%- endraw %}
 		</li>
 	</script>
-	<script id="current_joined_channel_card_detail" type="text/template">
-		
+	<script id="user-conversation-area" type="text/template">
+		<div class="message-block">
+			<h3>Message area</h3>
+			{% raw -%}
+				<div class="message-area">
+					{{#each message}}
+						{{#ifCond this.from_id this.current_user}}
+							<div class="message sent">
+								<h6>{{this.from_user}}</h6>
+								<p>{{this.body}}</p>
+								<h6>{{this.sent}}</h6>
+							</div>
+						{{else}}
+							<div class="message recieved">
+								<h6>{{this.from_user}}</h6>
+								<p>{{this.body}}</p>
+								<h6>{{this.sent}}</h6>
+							</div>
+						{{/ifCond}}
+					{{/each}}
+				</div>
+			{%- endraw %}
+			<div class="text-area">
+				<form onsubmit="event.preventDefault(); send_message(this)">
+					<input type="text", placeholder="Type in text to send">
+					<button type="submit">Send message</button>
+				</form>
+			</div>
+		</div>
 	</script>
-	<script id="user_conversation_card_detail" type="text/template">
-		
+	<script id="message" type="text/template">
+		{% raw -%}
+			{{#ifCond from_id current_user}}
+				<div class="message sent">
+					<h6>{{from_user}}</h6>
+					<p>{{body}}</p>
+					<h6>{{sent}}</h6>
+				</div>
+			{{else}}
+				<div class="message recieved">
+					<h6>{{from_user}}</h6>
+					<p>{{body}}</p>
+					<h6>{{sent}}</h6>
+				</div>
+			{{/ifCond}}
+		{%- endraw %}
 	</script>
-	<script id="search_channel_card_detail" type="text/template">
-		
+	<script id="channel-conversation-area" type="text/template">
+		<div class="message-block">
+			<h3>Message area</h3>
+			{% raw -%}
+				<div class="message-area">
+					{{#each message}}
+						{{#ifCond this.from_id this.current_user}}
+							<div class="message sent">
+								<h6>{{this.from_user}}</h6>
+								<p>{{this.body}}</p>
+								<h6>{{this.sent}}</h6>
+							</div>
+						{{else}}
+							<div class="message recieved">
+								<h6>{{this.from_user}}</h6>
+								<p>{{this.body}}</p>
+								<h6>{{this.sent}}</h6>
+							</div>
+						{{/ifCond}}
+					{{/each}}
+				</div>
+			{%- endraw %}
+			<div class="text-area">
+				<form onsubmit="event.preventDefault(); send_message(this)">
+					<input type="text", placeholder="Type in text to send">
+					<button type="submit">Send message</button>
+				</form>
+			</div>
+		</div>
 	</script>
 	<script id="start_conversation_card_template" type="text/template">
 		{% raw -%}
@@ -54,13 +126,13 @@
 						<h4>{{this.username}}</h4>
 						<p>{{this.email}} | Joined: {{this.joined}}</p>
 						{{# if this.is_active }}
-						<h6>Active now</h6>
+							<h6>Active now</h6>
 						{{ else }}
 							<h6>Last seen: {{this.last_seen}}</h6>
 						{{/ if }}
 					</div>
 					<div>
-						<button type="submit" id="cedric" data-user="{{this.id}}" onclick="event.preventDefault();join_conversation_via_button_click(this)">Start conversation</button>
+						<button type="submit" data-user="{{this.id}}" onclick="event.preventDefault();join_conversation_via_button_click(this)">Start conversation</button>
 					</div>
 				</div>
 			{{/each}}
