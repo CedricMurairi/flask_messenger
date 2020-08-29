@@ -283,7 +283,7 @@ function fetch_user_messages(connection_id, current_user_id){
 	let keyTerm = ['connection_id', 'current_user_id'];
 	let data = [connection_id, current_user_id];
 
-	let response = make_post_request('user/fetch/direct/messages', keyTerm, data, user_message_area);
+	make_post_request('user/fetch/direct/messages', keyTerm, data, user_message_area);
 }
 
 function fetch_channel_messages(channel_id){
@@ -291,14 +291,32 @@ function fetch_channel_messages(channel_id){
 	let keyTerm = ['channel_id'];
 	let data = [channel_id];
 
-	let response = make_post_request('user/fetch/channel/messages', keyTerm, data, channel_message_area);
+	make_post_request('user/fetch/channel/messages', keyTerm, data, channel_message_area);
 
 }
 
 // fix this part with real data
 function send_message(element){
+	let message_type = element.dataset.type;
+	let from_user_id = element.dataset.fromuser;
+	let to_user_id = element.dataset.touser;
+	let to_channe_id = element.dataset.tochannel;
 	let message = element[0].value;
-	console.log(message);
+
+	if(message_type == 'direct'){
+		let keyTerm = ['message_type', 'from_user_id', 'to_user_id', 'message'];
+		let data = [message_type, from_user_id, to_user_id, message];
+
+		make_post_request('user/send/message', keyTerm, data, message_template);
+	}
+
+	if(message_type == 'channel'){
+		let keyTerm = ['message_type', 'from_user_id', 'to_channe_id', 'message'];
+		let data = [message_type, from_user_id, to_channe_id, message];
+
+		make_post_request('user/send/message', keyTerm, data, message_template);
+	}
+
 	document.querySelector('.message-area').innerHTML += message_template({'from_user': 'Cedric Aganze', 'body': message});
 }
 
@@ -314,9 +332,9 @@ function make_post_request(url, keyTerm, dataValue, template=null){
 		if (request.readyState == XMLHttpRequest.DONE){
 			if(request.status == 200){
 				response = await request.responseText;
-				// console.log(JSON.parse(response));
+				console.log(JSON.parse(response));
 				var data = JSON.parse(response);
-				(url == '/user/join-channel/channels') ? document.querySelector('#main-screen').innerHTML += template({'channel': data['response']}) : (url == '/user/conversation/user') ? document.querySelector('#main-screen').innerHTML += template({user: data['response']}) : (url == 'user/fetch/direct/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response']}) : (url == 'user/fetch/channel/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response']}) : console.log('get you');
+				(url == '/user/join-channel/channels') ? document.querySelector('#main-screen').innerHTML += template({'channel': data['response']}) : (url == '/user/conversation/user') ? document.querySelector('#main-screen').innerHTML += template({user: data['response']}) : (url == 'user/fetch/direct/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response'], from_user: data['backup']['current_user'], to_user: data['backup']['connection_user']}) : (url == 'user/fetch/channel/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response'], from_user: data['backup']['current_user'], to_channel: data['backup']['channel_id']}) : console.log('get you');
 				return response
 				// document.querySelector('#main-screen').innerHTML = template;
 			}else{
