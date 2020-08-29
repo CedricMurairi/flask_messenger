@@ -108,9 +108,9 @@ def fetch_direct_message():
 	 		for message_item in messages:
 	 			print(message_item.id, message_item.message)
 
-	 		return {'response': [{'current_user': current_user_id, 'from_id': message.from_id, 'to_id': message.to_id, 'from_user': User.query.filter_by(id=message.from_id).first().username, 'to_user': User.query.filter_by(id=message.to_id).first().username, 'body': message.message, 'sent': message.sent} for message in messages]}
+	 		return {'backup': {'connection_user': connection_id, 'current_user': current_user_id}, 'response': [{'connection_user': connection_id, 'current_user': current_user_id, 'from_id': message.from_id, 'to_id': message.to_id, 'from_user': User.query.filter_by(id=message.from_id).first().username, 'to_user': User.query.filter_by(id=message.to_id).first().username, 'body': message.message, 'sent': message.sent} for message in messages]}
 
-	 	return {'response': 'There are no message thread for current user'}
+	 	return {'backup': {'connection_user': connection_id, 'current_user': current_user_id}, 'response': 'There are no message thread for current user'}
 
 	 return redirect(url_for('index'))
 
@@ -127,22 +127,33 @@ def fetch_channel_message():
 	 	if messages:
 		 	for message in messages:
 		 		print(message.from_id, message.message)
-	 		return {'response': [{'channel_name': Channel.query.filter_by(id=message.to_channel_id).first().name , 'current_user': current_user.id, 'from_id': message.from_id, 'from_user': User.query.filter_by(id=message.from_id).first().username, 'body': message.message, 'sent': message.sent} for message in messages]}
+	 		return {'backup': {'channel_id': message.to_channel_id, 'current_user': current_user.id}, 'response': [{'channel_id': message.to_channel_id, 'channel_name': Channel.query.filter_by(id=message.to_channel_id).first().name , 'current_user': current_user.id, 'from_id': message.from_id, 'from_user': User.query.filter_by(id=message.from_id).first().username, 'body': message.message, 'sent': message.sent} for message in messages]}
 	 	print('The channel id is:', channel_id)
-	 	return {'response': 'The server got your response for channel messages'}
+	 	return {'backup': {'channel_id': channel_id, 'current_user': current_user.id}, 'response': 'The server got your response for channel messages'}
 
 	 return redirect(url_for('index'))
 
 
 @user.route('/send/message', methods=['POST'])
 def send_message():
+	message_type = request.form.get('message_type')
+	if message_type == "direct":
+		from_id = request.form.get('from_user_id')
+		to_id = request.form.get('to_user_id')
+		message = request.form.get('message')
+		new_message = MessageUser(from_id=from_id, to_id=to_id, message=message)
+		db.session.add(new_message)
+		db.session.commit()
 
-	# message = MessageUser(from_id=, to_id=, message=)
-	# message = MessageChannel(from_id=, to_channel_id=, message=)
+	if message_type == "channel":
+		from_id = request.form.get('from_user_id')
+		to_channel_id = request.form.get('to_channe_id')
+		message = request.form.get('message')
+		new_message = MessageChannel(from_id=from_id, to_channel_id=to_channel_id, message=message)
+		db.session.add(new_message)
+		db.session.commit()
 
-	# db.session.add(message)
-	# db.session.commit()
-	return
+	return {'response': 'message successfully sent'}
 
 
 @user.route("/<string:username>/settings", methods=['GET', 'POST'])
