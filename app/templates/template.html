@@ -42,9 +42,9 @@
 		</li>
 	</script>
 	<script id="user-conversation-area" type="text/template">
-		<div class="message-block">
-			<h3>Message area</h3>
-			{% raw -%}
+		{% raw -%}
+			<div class="message-block">
+				<h3>Message area</h3>
 				<div class="message-area">
 					{{#each message}}
 						{{#ifCond this.from_id this.current_user}}
@@ -62,14 +62,14 @@
 						{{/ifCond}}
 					{{/each}}
 				</div>
-			{%- endraw %}
-			<div class="text-area">
-				<form onsubmit="event.preventDefault(); send_message(this)">
-					<input type="text", placeholder="Type in text to send">
-					<button type="submit">Send message</button>
-				</form>
+				<div class="text-area">
+					<form data-type="direct" data-fromuser="{{from_user}}" data-touser="{{to_user}}" onsubmit="event.preventDefault(); send_message(this)">
+						<input type="text", placeholder="Type in text to send">
+						<button type="submit">Send message</button>
+					</form>
+				</div>
 			</div>
-		</div>
+		{%- endraw %}
 	</script>
 	<script id="message" type="text/template">
 		{% raw -%}
@@ -89,9 +89,9 @@
 		{%- endraw %}
 	</script>
 	<script id="channel-conversation-area" type="text/template">
-		<div class="message-block">
-			<h3>Message area</h3>
-			{% raw -%}
+		{% raw -%}
+			<div class="message-block">
+				<h3>Message area</h3>
 				<div class="message-area">
 					{{#each message}}
 						{{#ifCond this.from_id this.current_user}}
@@ -109,14 +109,14 @@
 						{{/ifCond}}
 					{{/each}}
 				</div>
-			{%- endraw %}
-			<div class="text-area">
-				<form onsubmit="event.preventDefault(); send_message(this)">
-					<input type="text", placeholder="Type in text to send">
-					<button type="submit">Send message</button>
-				</form>
+				<div class="text-area">
+					<form data-type="channel" data-fromuser="{{from_user}}" data-tochannel="{{to_channel}}" onsubmit="event.preventDefault(); send_message(this)">
+						<input type="text", placeholder="Type in text to send">
+						<button type="submit">Send message</button>
+					</form>
+				</div>
 			</div>
-		</div>
+		{%- endraw %}
 	</script>
 	<script id="start_conversation_card_template" type="text/template">
 		{% raw -%}
