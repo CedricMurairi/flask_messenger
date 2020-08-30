@@ -4,9 +4,7 @@
 {% block title %}Home Page{% endblock %}
 
 {% block header %}
-	<div id="logo">
-		Flask Messenger
-	</div>
+	{{super()}}
 	<nav>
 		<ul id="buttons">
 			<a href="{{ url_for('auth.logout') }}"><li id="logout" class="button">LogOut</li></a>
@@ -24,6 +22,6 @@
 {% block body %}
 	<div id="error-message">
 		<h3>This feature is still under development</h3>
-		<button>Get back to home</button>
+		<button><a href="{{url_for('index')}}">Get back to home</a></button>
 	</div>
 {% endblock %}

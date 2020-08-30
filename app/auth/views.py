@@ -59,13 +59,15 @@ def register():
 		name = request.form.get('name')
 		email = request.form.get('email')
 		password = request.form.get('password')
-		try:
-			new_user = User(username=name, email=email, password=password)
-			db.session.add(new_user)
-		except error:
-			flash('An error occured')
-			return redirect(url_for('auth.regidter'))
-		return redirect(url_for('auth.login'))
+		if name and email and password:
+			try:
+				new_user = User(username=name, email=email, password=password)
+				db.session.add(new_user)
+			except error:
+				flash('An error occured')
+				return redirect(url_for('auth.regidter'))
+		flash('You cannot register with empty fields')
+		return redirect(url_for('auth.register'))
 	if session.get('user') is not None:
 		return redirect(url_for('index'))
 	return render_template('register.html')

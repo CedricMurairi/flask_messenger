@@ -4,9 +4,7 @@
 {% block title %}Signin Page{% endblock %}
 
 {% block header %}
-	<div id="logo">
-		Flask Messenger
-	</div>
+	{{super()}}
 	<nav>
 		<ul id="buttons">
 			<a href="{{ url_for('auth.register') }}"><li id="register" class="button red">Register</li></a>

@@ -57,7 +57,7 @@
 								{% if conversation_user.is_active %}
 									<h6>Active now</h6>
 								{% else %}
-									<h6>Last seen: {{conversation_user.active_since}}</h6>
+									<h6>Last seen: {{ moment(conversation_user.last_seen).fromNow(refresh=True) }}</h6>
 								{% endif %}
 							</div>
 						{% endfor %}
@@ -90,4 +90,9 @@
 			<h1>Here is the crazy area, welcome and join</h1>
 		</div>
 	</div>
+{% endblock %}
+
+{% block scripts %}
+	{{super()}}
+	{{moment.include_moment()}}
 {% endblock %}

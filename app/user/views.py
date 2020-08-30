@@ -145,6 +145,13 @@ def send_message():
 		db.session.add(new_message)
 		db.session.commit()
 
+		message_saved = MessageUser.query.filter(and_(MessageUser.from_id==from_id, MessageUser.to_id==to_id, MessageUser.message==message)).first()
+		time = message_saved.sent
+		sender = User.query.filter_by(id=from_id).first().username
+		print(message, message_saved.message)
+
+		return {'response': {'from_user': sender, 'message': message, 'sent': time}}
+
 	if message_type == "channel":
 		from_id = request.form.get('from_user_id')
 		to_channel_id = request.form.get('to_channe_id')
@@ -153,7 +160,12 @@ def send_message():
 		db.session.add(new_message)
 		db.session.commit()
 
-	return {'response': 'message successfully sent'}
+		message_saved = MessageChannel.query.filter(and_(MessageChannel.from_id==from_id, MessageChannel.to_channel_id==to_channel_id, MessageChannel.message==message)).first()
+		time = message_saved.sent
+		sender = User.query.filter_by(id=from_id).first().username
+		print(message, message_saved.message)
+
+		return {'response': {'from_user': sender, 'message': message, 'sent': time}}
 
 
 @user.route("/<string:username>/settings", methods=['GET', 'POST'])
