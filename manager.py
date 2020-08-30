@@ -10,6 +10,12 @@ manager = Manager(app)
 migrate = Migrate(app, db)
 
 @manager.command
+def create_table():
+	"""Create tables"""
+	db.create_all()
+	print('Tables created')
+
+@manager.command
 def test():
 	"""Run the unit tests."""
 	import unittest
