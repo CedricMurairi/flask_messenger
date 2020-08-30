@@ -32,16 +32,20 @@ To build this project, I could use different tools and techniques; here are my c
 # How to install
 
 	$ git clone https://github.com/CedricMurairi/flask_messenger.git
-	
+
 	$ cd flask_messenger
 
 	$ pip3 install -r requirements.txt
 
 	$ export FLASK_APP=manager.py
 
-	$ python3 manage.py db init
+	$ python3 manage.py create_table
+
+	$ python3 manager.py db init
 
 	$ python3 manage.py db migrate
+
+	$ python3 manager.py db upgrade
 
 	$ flask run
 
