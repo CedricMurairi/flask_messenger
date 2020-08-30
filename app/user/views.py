@@ -4,7 +4,9 @@ from flask import request, jsonify, render_template ,redirect, url_for, session
 from ..models import User, Channel, Connection, MessageUser, MessageChannel
 from . import user
 from .. import db
+from .. import socketio
 from sqlalchemy import and_, or_, func
+from flask_socketio import emit
 
 
 @user.route("/create-channel", methods=['GET', 'POST'])

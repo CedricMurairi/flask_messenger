@@ -206,7 +206,7 @@ function make_post_request(url, keyTerm, dataValue, template=null){
 
 			if(request.status == 200){
 
-				response = await request.responseText;
+				response = request.responseText;
 				console.log(JSON.parse(response));
 				var data = JSON.parse(response);
 				(url == '/user/join-channel/channels') ? document.querySelector('#main-screen').innerHTML += template({'channel': data['response']}) : (url == '/user/conversation/user') ? document.querySelector('#main-screen').innerHTML += template({user: data['response']}) : (url == 'user/fetch/direct/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response'], from_user: data['backup']['current_user'], to_user: data['backup']['connection_user']}) : (url == 'user/fetch/channel/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response'], from_user: data['backup']['current_user'], to_channel: data['backup']['channel_id']}) : (url == 'user/send/message') ? document.querySelector('.message-area').innerHTML += message_template({'from_user': data['response']['from_user'], 'body': data['response']['message'], 'sent': data['response']['sent']}) : console.log('get you');
