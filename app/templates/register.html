@@ -4,9 +4,7 @@
 {% block title %}Registration Page{% endblock %}
 
 {% block header %}
-	<div id="logo">
-		Flask Messenger
-	</div>
+	{{super()}}
 	<nav>
 		<ul id="buttons">
 			<a href="{{ url_for('auth.login') }}"><li id="signin" class="button white">Sing In</li></a>
@@ -14,17 +12,18 @@
 	</nav>
 {% endblock %}
 {% block body %}
-	{% for message in get_flashed_messages() %}
-		<h3 class="flash_message">{{ message }}</h3>
-	{% endfor %}
 	<section id="main-section">
 		<div id="registration-block">
+			{% for message in get_flashed_messages() %}
+				<h3 class="flash_message">{{ message }}</h3>
+			{% endfor %}
 			<form id="registration-form" method="POST" action="{{url_for('auth.register')}}">
 				<input id="reg-name" type="text" name="name" placeholder="Enter your name"><br>
 				<input id="reg-email" type="email" name="email" placeholder="Enter your mail"><br>
 				<input id="reg-password" type="password" name="password" placeholder="Enter your password"><br>
 				<input id="reg-password-repeat" type="password" name="repeat_password" placeholder="Repeat oyur password"><br>
-				<button type="submit" id="registration_button" disabled class="submit-button">Register</button>
+				<!-- remove disabled but should be put back -->
+				<button type="submit" id="registration_button" class="submit-button">Register</button>
 			</form>
 			<div>
 				<p id="correct-email-error">Type in a correct mail address</p>

@@ -4,16 +4,19 @@
 {% block title %}Home Page{% endblock %}
 
 {% block header %}
-	<div id="logo">
-		Flask Messenger
-	</div>
+	{{super()}}
 	<nav>
 		<ul id="buttons">
 			<a href="{{ url_for('auth.logout') }}"><li id="logout" class="button">LogOut</li></a>
 			<li id="account" class="button clear-blue">
-				{{username}}
+				{{user.username}}
 			</li>
 		</ul>
+		<div id="user_profile_option_card" class="hide">
+			<a href="{{ url_for('user.profile', username=user.username) }}"><p>Profile</p></a>
+			<a href="{{ url_for('user.settings', username=user.username) }}"><p>Settings</p></a>
+			<a href="{{ url_for('auth.logout') }}"><p>LogOut</p></a>
+		</div>
 	</nav>
 {% endblock %}
 {% block body %}
@@ -22,12 +25,44 @@
 			<div id="up">
 				<p id="start_conversation_button">+Start a conversation</p>
 				<p id="create_channel_button">+Start a chanel</p>
-				<p id="join_channe_button">+Join a chanel</p>
+				<p id="join_channel_button">+Join a chanel</p>
 			</div>
 			<hr>
 			<div id="down">
-				<p>Chanels</p>
-				<p>Conversation</p>
+				<div>
+					<p id="channel_title">Chanels</p>
+					<div id="channels" class="hide">
+						{% for channel in channel_created %}
+							<div class="channel_card" data-id={{channel.id}} onclick="event.preventDefault();fetch_channel_messages(this.dataset.id)">
+								<h5>{{channel.name}}</h5>
+								<h6>{{channel.description}}</h6>
+								<h6>Created: {{ (channel.channel_creation) }}
+							</div>
+						{% endfor %}
+						{% for channel in channel_joined %}
+							<div class="channel_card" data-id={{channel.id}} onclick="event.preventDefault();fetch_channel_messages(this.dataset.id)">
+								<h5>{{channel.name}}</h5>
+								<h6>{{channel.description}}</h6>
+								<h6>Created: {{ (channel.channel_creation) }}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div>
+					<p id='conversation_title'>Conversation</p>
+					<div id="conversations" class="hide">
+						{% for conversation_user in conversation_users %}
+							<div class="user_conversation_card" id="user_conversation_card" data-id={{conversation_user.id}} onclick="event.preventDefault();fetch_user_messages(this.dataset.id, '{{user.id}}')">
+								<h5>{{conversation_user.username}}</h5>
+								{% if conversation_user.is_active %}
+									<h6>Active now</h6>
+								{% else %}
+									<h6>Last seen: {{conversation_user.last_seen}}</h6>
+								{% endif %}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="main-screen">
@@ -50,6 +85,9 @@
 					<h3>Title 4</h3>
 				</div>
 			</div>
+		</div>
+		<div id="message-area" class="hide">
+			<h1>Here is the crazy area, welcome and join</h1>
 		</div>
 	</div>
 {% endblock %}

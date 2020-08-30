@@ -1,0 +1,19 @@
+{% extends 'template.html' %}
+
+
+{% block title %}Home Page{% endblock %}
+
+{% block header %}
+	{{super()}}
+	<nav>
+		<!--  -->
+	</nav>
+{% endblock %}
+{% block body %}
+	<!-- <div id="main-container"> -->
+		<div id="error-message">
+			<h3>This page was not found</h3>
+			<button><a href="{{url_for('index')}}">Get back to home</a></button>
+		</div>
+	<!-- </div> -->
+{% endblock %}
