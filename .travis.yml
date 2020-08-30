@@ -3,9 +3,9 @@ python: 3.6
 install: pip install -r requirements.txt
 script: python manager.py test
 
-# deploy:
-#   provider: heroku
-#   api_key: $HEROKU_API_KEY
-#   app: cd-messenger-001
-#   run: python manager.py db init && python manager.py db migrate && python manager.py db upgrade
-#   on: master
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
+  app: cd-messenger-001
+  run: python manager.py create_table && python manager.py db init && python manager.py db migrate && python manager.py db upgrade
+  on: master
