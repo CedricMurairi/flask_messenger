@@ -84,138 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
 //Clean the following code:=========================== 
 // TODO: Clean up the code with clear and consise methods
 
-
-	// var valid_password = false;
-	// var matching_password = false;
-	// var valid_email = false;
-	// var valid_name = false;
-	// var valid_login_email = false;
-	// var valid_login_password = false;
-	// var channel_name_value = false;
-	// var channel_description_value = false;
-
-	// document.querySelector('#channel_name').onkeyup =  () => {
-	// 	if(document.querySelector('#channel_name').value.lenght > 0) {
-	// 		channel_name_value = true;
-	// 		start_channel_button.disabled = false;
-	// 		// if(channel_description_value && channel_description_value) {
-	// 		// 	start_channel_button.disabled = false;
-	// 		// }
-	// 		// else{
-	// 		// 	start_channel_button.disabled = true;
-	// 		// }
-	// 	}
-	// 	else{
-	// 		start_channel_button.disabled = true;
-	// 	}
-	// }
-
-	// document.querySelector('#channel_description').onkeyup =  () => {
-	// 	if(document.querySelector('#channel_description').value.length > 0) {
-	// 		channel_description_value = true;
-	// 		start_channel_button.disabled = false;
-	// 		// if(channel_description_value && channel_description_value) {
-	// 		// 	start_channel_button.disabled = false;
-	// 		// }
-	// 		// else{
-	// 		// 	start_channel_button.disabled = true;
-	// 		// }
-	// 	}
-	// 	else{
-	// 		start_channel_button.disabled = true;
-	// 	}
-	// }
-
-	// document.querySelector('#log-email').onkeyup =  () => {
-	// 	const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-	// 	if(document.querySelector('#log-email').value.match(validEmailFormat)) {
-	// 		valid_login_email = true;
-	// 		if(valid_login_email && valid_login_password) {
-	// 			signin_button.disabled = false;
-	// 		}
-	// 		else{
-	// 			signin_button.disabled = true;
-	// 		}
-	// 	}
-	// 	else{
-	// 		signin_button.disabled = true;
-	// 	}
-	// }
-
-	// document.querySelector('#log-password').onkeyup =  () => {
-	// 	const validPasswordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
-	// 	if(document.querySelector('#log-password').value.match(validPasswordFormat)) {
-	// 		valid_login_password = true;
-	// 		if(valid_login_email && valid_login_password) {
-	// 			signin_button.disabled = false;
-	// 		}
-	// 		else{
-	// 			signin_button.disabled = true;
-	// 		}
-	// 	}
-	// 	else{
-	// 		signin_button.disabled = true;
-	// 	}
-	// }
-
-	// document.querySelector('#reg-email').onkeyup = () => {
-	// 	console.log("key Up");
-	// 	const validEmailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-	// 	if (document.querySelector('#reg-email').value.match(validEmailFormat)) {
-	// 		document.querySelector('#correct-email-error').style.color = "green";
-	// 		valid_email = true;
-	// 		if(valid_email && valid_password && matching_password){
-	// 			registration_button.disabled = false;
-	// 		}
-	// 		else{
-	// 			registration_button.disabled = true;
-	// 		}
-	// 	}
-	// 	else {
-	// 		document.querySelector('#correct-email-error').style.color = "red";
-	// 		valid_email = false;
-	// 		registration_button.disabled = true;
-
-	// 	}
-	// }
-
-	// document.querySelector('#reg-password').onkeyup = () => {
-	// 	const validPasswordFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}$/;
-	// 	if (document.querySelector('#reg-password').value.match(validPasswordFormat)) {
-	// 		document.querySelector('#correct-password-error').style.color = "green";
-	// 		valid_password = true;
-	// 		if(valid_email && valid_password && matching_password){
-	// 			registration_button.disabled = false;
-	// 		}
-	// 		else{
-	// 			registration_button.disabled = true;
-	// 		}
-	// 	}
-	// 	else {
-	// 		document.querySelector('#correct-password-error').style.color = "red";
-	// 		valid_password = false;
-	// 		registration_button.disabled = true;
-	// 	}
-	// }
-
-	// document.querySelector('#reg-password-repeat').onkeyup = () => {
-	// 	if (document.querySelector("#reg-password").value == document.querySelector('#reg-password-repeat').value) {
-	// 		document.querySelector('#password-match-error').style.color = "green";
-	// 		matching_password = true;
-	// 		if(valid_email && valid_password && matching_password){
-	// 			registration_button.disabled = false;
-	// 		}
-	// 		else{
-	// 			registration_button.disabled = true;
-	// 		}
-	// 	}
-	// 	else {
-	// 		document.querySelector('#password-match-error').style.color = "red";
-	// 		matching_password = false;
-	// 		registration_button.disabled = true;
-	// 	}
-	// }
-
 });
 
 function submit_form(element){
@@ -279,6 +147,7 @@ function join_conversation_via_button_click(element){
 }
 
 function fetch_user_messages(connection_id, current_user_id){
+
 	console.log("There we are fetching messages for the user", connection_id, current_user_id);
 	let keyTerm = ['connection_id', 'current_user_id'];
 	let data = [connection_id, current_user_id];
@@ -287,6 +156,7 @@ function fetch_user_messages(connection_id, current_user_id){
 }
 
 function fetch_channel_messages(channel_id){
+
 	console.log("There we are fetching the message for the channel", channel_id);
 	let keyTerm = ['channel_id'];
 	let data = [channel_id];
@@ -297,6 +167,7 @@ function fetch_channel_messages(channel_id){
 
 // fix this part with real data
 function send_message(element){
+
 	let message_type = element.dataset.type;
 	let from_user_id = element.dataset.fromuser;
 	let to_user_id = element.dataset.touser;
@@ -317,7 +188,8 @@ function send_message(element){
 		make_post_request('user/send/message', keyTerm, data, message_template);
 	}
 
-	document.querySelector('.message-area').innerHTML += message_template({'from_user': 'Cedric Aganze', 'body': message});
+	element[0].value = '';
+	element[0].focus();
 }
 
 function make_post_request(url, keyTerm, dataValue, template=null){
@@ -329,12 +201,16 @@ function make_post_request(url, keyTerm, dataValue, template=null){
 
 	console.log('Request onload');
 	request.onload = async function(){
+
 		if (request.readyState == XMLHttpRequest.DONE){
+
 			if(request.status == 200){
+
 				response = await request.responseText;
 				console.log(JSON.parse(response));
 				var data = JSON.parse(response);
-				(url == '/user/join-channel/channels') ? document.querySelector('#main-screen').innerHTML += template({'channel': data['response']}) : (url == '/user/conversation/user') ? document.querySelector('#main-screen').innerHTML += template({user: data['response']}) : (url == 'user/fetch/direct/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response'], from_user: data['backup']['current_user'], to_user: data['backup']['connection_user']}) : (url == 'user/fetch/channel/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response'], from_user: data['backup']['current_user'], to_channel: data['backup']['channel_id']}) : console.log('get you');
+				(url == '/user/join-channel/channels') ? document.querySelector('#main-screen').innerHTML += template({'channel': data['response']}) : (url == '/user/conversation/user') ? document.querySelector('#main-screen').innerHTML += template({user: data['response']}) : (url == 'user/fetch/direct/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response'], from_user: data['backup']['current_user'], to_user: data['backup']['connection_user']}) : (url == 'user/fetch/channel/messages') ? document.querySelector('#main-screen').innerHTML = template({message: data['response'], from_user: data['backup']['current_user'], to_channel: data['backup']['channel_id']}) : (url == 'user/send/message') ? document.querySelector('.message-area').innerHTML += message_template({'from_user': data['response']['from_user'], 'body': data['response']['message'], 'sent': data['response']['sent']}) : console.log('get you');
+
 				return response
 				// document.querySelector('#main-screen').innerHTML = template;
 			}else{
