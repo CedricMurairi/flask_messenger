@@ -12,6 +12,7 @@ class Config():
 	APPLICATION_MAIL_SENDER = 'Cedric Murairi <mymail@gmail.com>'
 	APPLICATION_ADMIN = os.environ.get('APPLICATION_ADMIN')
 
+	@staticmethod
 	def init_app(app):
 		pass
 
@@ -35,6 +36,5 @@ config = {
 	'development': DevelopmentConfig,
 	'testing': TestingConfig,
 	'production': ProductionConfig,
-
 	'default': DevelopmentConfig
 }

@@ -1,0 +1,17 @@
+{% extends 'template.html' %}
+
+
+{% block title %}Home Page{% endblock %}
+
+{% block header %}
+	{{super()}}
+	<nav>
+		<!--  -->
+	</nav>
+{% endblock %}
+{% block body %}
+	<div id="error-message">
+		<h3>This is a bad request nigga, check it out and try again letter</h3>
+		<button><a href="{{url_for('index')}}">Get back to home</a></button>
+	</div>
+{% endblock %}
