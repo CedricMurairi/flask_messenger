@@ -15,7 +15,6 @@ def create_app(config_name):
 
     config[config_name].init_app(app)
 
-    db.init_app(app)
     bootstrap.init_app(app)
     socketio.init_app(app)
 
