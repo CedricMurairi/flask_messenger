@@ -8,12 +8,9 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(64))
 	email = db.Column(db.String(64))
-	password = db.Column(db.String(64))
+	password_hash = db.Column(db.String(128))
 	joined = db.Column(db.DateTime, default=datetime.utcnow)
-	is_active = db.Column(db.Boolean, default=False)
 	last_seen = db.Column(db.DateTime, default=datetime.utcnow)
-	# db.relationship('Channel', foreign_keys=[Channel.channel_creator], backref='creator', lazy='dynamic')
-	channel_joined = db.Column(db.Integer, db.ForeignKey('channels.id'))
 
 class MessageUser(db.Model):
 	__tablename__ = 'usermessage'
@@ -35,8 +32,17 @@ class MessageChannel(db.Model):
 
 class Connection(db.Model):
 	__tablename__ = 'connections'
-	from_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
-	to_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+	id = db.Column(db.Integer, primary_key=True)
+	from_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	to_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+class JoinedChannel(object):
+	"""docstring for ChannelConnection"""
+	__tablename__ = 'joinedchannels'
+	id = db.Column(db.Integer, primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	channel_id = db.Column(db.Integer, db.ForeignKey('channels.id'))
+		
 
 class Channel(db.Model):
 	__tablename__ = 'channels'
