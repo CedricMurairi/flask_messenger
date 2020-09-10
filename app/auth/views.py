@@ -4,81 +4,58 @@ from flask import render_template, jsonify, request, session, url_for, redirect,
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import auth
 from ..models import User
-from .forms import InitialForm
+from .forms import LoginForm, RegistrationForm
 from app import db
-from sqlalchemy import and_
-import json
-
-
-@auth.app_errorhandler(404)
-def handle404(error):
-	return render_template('404.html')
-
-
-@auth.app_errorhandler(500)
-def handle500(error):
-	return render_template('500.html')
-
-
-@auth.app_errorhandler(403)
-def handle403(error):
-	return render_template('403.html')
-
-
-@auth.app_errorhandler(400)
-def handle400(error):
-	return render_template('400.html')
-
+from flask_login import login_user, logout_user, login_required, current_user
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-	if request.method == 'POST':
-		email = request.form.get('email')
-		password = request.form.get('password')
-		print(email, password)
-		try:
-			user = User.query.filter(and_(User.email==email, User.password==password)).first()
-		except Exception as e:
-			print(e)
-		if user is None:
-			flash('Something wrong with you credential')
-			return redirect(url_for('.login'))
-		session['user'] = True
-		session['username'] = user.username
-		session['email'] = user.email
+	if current_user.is_authenticated:
 		return redirect(url_for('index'))
-	if session.get('user') is not None:
-		return redirect(url_for('index'))
-	return render_template('signin.html')
+	form = LoginForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(email=form.email.data).first()
+		if user and user.verify_password(form.password.data):
+			login_user(user)
+			flash('You have been logged in successfuly')
+			return redirect(request.args.get('next') or url_for('index'))
+		flash('Invalid email or password')
+		return redirect('auth.login')
+		form.email.data = ""
+		form.password.data = ""
+	return render_template('signin.html', form=form)
 
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-	if request.method == 'POST':
-		name = request.form.get('name')
-		email = request.form.get('email')
-		password = request.form.get('password')
-		if name and email and password:
-			try:
-				new_user = User(username=name, email=email, password=password)
-				db.session.add(new_user)
-			except error:
-				flash('An error occured')
-				return redirect(url_for('auth.regidter'))
-		flash('You cannot register with empty fields')
-		return redirect(url_for('auth.register'))
-	if session.get('user') is not None:
+	if current_user.is_authenticated:
 		return redirect(url_for('index'))
-	return render_template('register.html')
+	form = RegistrationForm()
+	if form.validate_on_submit():
+		user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+		db.session.add(user)
+		db.session.commit()
+		flash('Successfuly registered, you can login')
+		redirect(url_for('auth.login'))
+	return render_template('register.html', form=form)
+
+
+@auth.route('/request_password_reset', methods=['GET', 'POST'])
+def forgot_password():
+	if current_user.is_authenticated:
+		return redirect(url_for('index'))
+	form = RequestPasswordResetForm()
+	if form.validate_on_submit():
+		# TODO: implement the email sending to let users reset their password
+		flash('We have sent an email with the link to reset on your inbox')
+		redirect(url_for('auth.forgot_password'))
+	return render_template('request_password_reset.html', form=form)
 
 
 @auth.route('/logout', methods=['GET', 'POST'])
+@login_required
 def logout():
-	if session.get('user') is None:
-		flash('Already logged out')
-		return redirect(url_for('index'))
-	session.pop('user')
-	session.pop('username')
-	session.pop('email')	
+	logout_user()
+	flash('You have been logged out successfuly')	
 	return redirect(url_for('index'))
