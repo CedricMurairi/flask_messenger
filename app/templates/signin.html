@@ -1,28 +1,21 @@
-{% extends 'template.html' %}
+{% extends 'base_template.html' %}
 
 
-{% block title %}Signin Page{% endblock %}
+<!-- {% block title %}Signin Page{% endblock %} -->
 
-{% block header %}
-	{{super()}}
-	<nav>
-		<ul id="buttons">
-			<a href="{{ url_for('auth.register') }}"><li id="register" class="button red">Register</li></a>
-		</ul>
-	</nav>
+{% block navbar %}
+	<ul id="buttons">
+		<a href="{{ url_for('auth.register') }}"><li id="register" class="button red">Register</li></a>
+	</ul>
 {% endblock %}
-{% block body %}
+
+{% block content %}
 	<section id="main-section">
 		<div id="login-block">
 			{% for message in get_flashed_messages() %}
 				<h3 class="flash_message">{{ message }}</h3>
 			{% endfor %}
-			<form id="login-form" method="POST" action="{{url_for('auth.login')}}">
-				<input id="log-email" type="email" name="email" placeholder="Enter your mail"><br>
-				<input id="log-password" type="password" name="password" placeholder="Enter your password"><br>
-
-				<button type="submit" id="signin_button" class="submit-button">Login</button>
-			</form>
+			{{wtf.quick_form(form)}}
 		</div>
 	</section>
 {% endblock %}
