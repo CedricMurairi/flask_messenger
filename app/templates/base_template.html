@@ -1,0 +1,54 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block html %}
+
+	{% block head %}
+
+		{% block styles %}
+			<link rel="stylesheet" type="text/css" href="/statics/css/style.css">
+			<link rel="icon" type="image/png" href="/statics/book_checker_logo.png"/>
+		{% endblock %}
+		{% block metas %}
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% endblock %}
+
+	{% endblock %}
+
+	{% block body %}
+		<header>
+			<div id="logo"><a href="{{ url_for('index') }}"><img src="/statics/book_checker_logo.png" width="25px">Flask Messenger</a></div>
+			<div id="menu-icon">
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+			<div id="navbar" class="navbar">
+				{% block navbar %}
+				{% endblock %}
+				<h4 id="close">Close</h4>
+			</div>
+		</header>
+		<section>
+
+			{% for message in get_flashed_messages() %}
+				<h4 class="flashed_message">{{ message }}</h4>
+			{% endfor %}
+			
+			{% block content %}{% endblock %}
+
+		</section>
+		<hr>
+		<footer>
+			<div id="copy-rights">Copy Rights &copy; Black Hole Company 2020</div>
+			<div id="company">Black Hole Company</div>
+		</footer>
+	{% endblock %}
+
+	{% block scripts %}
+		{{super()}}
+		{{moment.include_moment()}}
+		<script type="text/javascript" src="/statics/javascript/app.js"></script>
+	{% endblock %}
+
+{% endblock %}
