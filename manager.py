@@ -2,13 +2,21 @@ import os
 from app import create_app, db
 from app.models import User
 from flask_script import Manager, Shell
+from flask_login import LoginManager
 from flask_migrate import Migrate, MigrateCommand
 
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db)
+login_manager = LoginManager(app)
 
+login_manager.session_protection = 'strong'
+login_manager.loginview = 'auth.login'
+
+@login_manager.user_loader
+def load_user(user_id):
+	return User.query.get(int(user_id))
 
 @manager.command
 def create_table():
