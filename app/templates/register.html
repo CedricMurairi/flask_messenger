@@ -12,10 +12,10 @@
 {% block content %}
 	<section id="main-section">
 		<div id="registration-block">
-			{% for message in get_flashed_messages() %}
-				<h3 class="flash_message">{{ message }}</h3>
-			{% endfor %}
 			{{wtf.quick_form(form)}}
+			<div>
+				<p>Do have an account? | <a href="{{ url_for('auth.login') }}">Login</a></p>
+			</div>
 			<div>
 				<p id="correct-email-error">Type in a correct mail address</p>
 				<p id="correct-password-error">Password should contain: number, special caracter, number(LWC&UPC)</p>

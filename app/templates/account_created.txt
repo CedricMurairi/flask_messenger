@@ -1,0 +1,9 @@
+Dear {{ user }},
+Welcome to Flask Messenger!
+
+You have successfully created your account:
+
+Sincerely,
+The Flasky Team
+
+Note: replies to this email address are not monitored.

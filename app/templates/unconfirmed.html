@@ -1,0 +1,29 @@
+{% extends 'base_template.html' %}
+
+
+<!-- {% block title %}Signin Page{% endblock %} -->
+
+{% block navbar %}
+
+	{% if current_user.is_authenticated %}
+		<p><span>{{current_user.username}}</span> <a href="{{ url_for('auth.logout') }}">Logout</a></p>
+	{% else %}
+		<a href="{{ url_for('auth.login') }}">Login</a>
+		<a href="{{ url_for('auth.register') }}">Register</a>
+	{% endif %}
+
+{% endblock %}
+
+{% block content %}
+	<section id="main-section">
+		<div>
+			<h2>Hello {{current_user.username}}!</h2>
+			<h3>You have not confirm your account yet!</h3>
+			<p>For you to be able to access this website and gain the full experience, you need firt to confirm you email for us to make sure it is you!</p>
+			<p>Please check your inbox for a confirmation mail and get started...</p>
+		</div>
+		<div>
+			<p>Did not get the confirmation email? | <a href="{{ url_for('auth.resend_confirmation') }}">Resend confirmation</a></p>
+		</div>
+	</section>
+{% endblock %}
