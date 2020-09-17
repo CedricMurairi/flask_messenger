@@ -23,48 +23,50 @@
 				<a href="url_for('')"><p id="join_channel_button">+Join a chanel</p></a>
 			</div>
 			<hr>
-			<div id="down">
-				<div>
-					<p id="channel_title">Chanels</p>
-					<div id="channels" class="hide">
-						{% for channel in channel_created %}
-							<a href="url_for('')">
-								<div class="channel_card" data-id={{channel.id}}>
-									<h5>{{channel.name}}</h5>
-									<h6>{{channel.description}}</h6>
-									<h6>Created: {{ (channel.channel_creation) }}
-								</div>
-							</a>
-						{% endfor %}
-						{% for channel in channel_joined %}
-							<a href="url_for('')">
-								<div class="channel_card" data-id={{channel.id}}>
-									<h5>{{channel.name}}</h5>
-									<h6>{{channel.description}}</h6>
-									<h6>Created: {{ (channel.channel_creation) }}
-								</div>
-							</a>
-						{% endfor %}
+			{% if current_user.is_authenticated() %}
+				<div id="down">
+					<div>
+						<p id="channel_title">Chanels</p>
+						<div id="channels" class="hide">
+							{% for channel in channel_created %}
+								<a href="url_for('')">
+									<div class="channel_card" data-id={{channel.id}}>
+										<h5>{{channel.name}}</h5>
+										<h6>{{channel.description}}</h6>
+										<h6>Created: {{ (channel.channel_creation) }}
+									</div>
+								</a>
+							{% endfor %}
+							{% for channel in channel_joined %}
+								<a href="url_for('')">
+									<div class="channel_card" data-id={{channel.id}}>
+										<h5>{{channel.name}}</h5>
+										<h6>{{channel.description}}</h6>
+										<h6>Created: {{ (channel.channel_creation) }}
+									</div>
+								</a>
+							{% endfor %}
+						</div>
+					</div>
+					<div>
+						<p id='conversation_title'>Conversation</p>
+						<div id="conversations" class="hide">
+							{% for conversation_user in conversation_users %}
+								<a href="">
+									<div class="user_conversation_card" id="user_conversation_card" data-id={{conversation_user.id}}>
+										<h5>{{conversation_user.username}}</h5>
+										{% if conversation_user.is_active %}
+											<h6>Active now</h6>
+										{% else %}
+											<h6>Last seen: {{conversation_user.last_seen}}</h6>
+										{% endif %}
+									</div>
+								</a>
+							{% endfor %}
+						</div>
 					</div>
 				</div>
-				<div>
-					<p id='conversation_title'>Conversation</p>
-					<div id="conversations" class="hide">
-						{% for conversation_user in conversation_users %}
-							<a href="">
-								<div class="user_conversation_card" id="user_conversation_card" data-id={{conversation_user.id}}>
-									<h5>{{conversation_user.username}}</h5>
-									{% if conversation_user.is_active %}
-										<h6>Active now</h6>
-									{% else %}
-										<h6>Last seen: {{conversation_user.last_seen}}</h6>
-									{% endif %}
-								</div>
-							</a>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
+			{% endif %}
 		</div>
 		<div id="main-screen">
 			<h2>Join Flask Messenger, the best place to share</h2>
