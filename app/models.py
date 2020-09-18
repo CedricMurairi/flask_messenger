@@ -5,6 +5,12 @@ from flask_login import UserMixin
 from flask import current_app
 from . import db
 from datetime import datetime
+from . import login_manager
+
+
+@login_manager.user_loader
+def load_user(user_id):
+	return User.query.get(int(user_id))
 
 class User(UserMixin, db.Model):
 	__tablename__ = 'users'
@@ -16,9 +22,11 @@ class User(UserMixin, db.Model):
 	last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 	confirmed = db.Column(db.Boolean, default=False)
 	channels = db.relationship('Channel', backref='creator', lazy='dynamic')
-	# direct_messages = db.relationship('MessageUser', backref='users', lazy='dynamic')
+	# direct_sent_messages = db.relationship('MessageUser', foreign_keys=[MessageUser.from_id], backref=db.backref('sender', lazy='joined'), lazy='dynamic', cascade='all, delete-orphan')
+	# direct_received_messages = db.relationship('MessageUser', foreign_keys=[MessageUser.to_id], backref=db.backref('receiver', lazy='joined'), lazy='dynamic', cascade='all, delete-orphan')
 	channel_messages = db.relationship('MessageChannel', backref='user', lazy='dynamic')
-	# connections = db.relationship('Connection', backref='users', lazy='dynamic')
+	# connections = db.relationship('Connection', foreign_keys=['Connection.from_id'], backref=db.backref('connector', lazy='joined'), lazy='dynamic', cascade='all, delete-orphan')
+	# connected = db.relationship('Connection', foreign_keys=['Connection.to_id'], backref=db.backref('connections', lazy='joined'), lazy='dynamic', cascade='all, delete-orphan')
 	joined_channels = db.relationship('JoinedChannel', backref='users', lazy='dynamic')
 
 	@property
@@ -33,8 +41,27 @@ class User(UserMixin, db.Model):
 		return check_password_hash(self.password_hash, password)
 
 	def generate_confirmation_token(self, expiration=3600):
-		s = Serializer(current_app.config['SECRET_KEY'], expiration)
+		s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
 		return s.dumps({'confirm': self.id})
+
+	def generate_reset_token(self, expiration=3600):
+		s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
+		return s.dumps({'reset': self.id})
+
+	@staticmethod
+	def reset_password(token, new_password):
+		s = Serializer(current_app.config['SECRET_KEY'])
+		try:
+			data = s.loads(token)
+			print(data)
+		except:
+			return False
+		user = User.query.get(data.get('reset'))
+		if user is None:
+			return False
+		user.password = new_password
+		db.session.add(user)
+		return True
 
 	def confirm(self, token):
 		s = Serializer(current_app.config['SECRET_KEY'])
@@ -44,10 +71,12 @@ class User(UserMixin, db.Model):
 			return False
 
 		if data.get('confirm') != self.id:
-			self.confirmed = True
-			db.session.add(self)
-			db.session.commit()
-			return True
+			return False
+
+		self.confirmed = True
+		db.session.add(self)
+		db.session.commit()
+		return True
 
 
 class MessageUser(db.Model):
