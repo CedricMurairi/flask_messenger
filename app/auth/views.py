@@ -4,20 +4,21 @@ from flask import render_template, jsonify, request, session, url_for, redirect,
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import auth
 from ..models import User
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, RequestPasswordResetForm, PasswordResetForm
 from app import db
 from flask_login import login_user, logout_user, login_required, current_user
 from ..email import send_mail
 
 @auth.before_app_request
 def before_request():
-	if current_user.is_authenticated and not current_user.confirmed and request.endpoint[:5] == 'auth':
+	if current_user.is_authenticated and not current_user.confirmed and request.endpoint[:5] != 'auth.':
 		return redirect(url_for('auth.unconfirmed'))
 
 
 @auth.route('/unconfirmed')
 def unconfirmed():
 	if current_user.is_anonymous or current_user.confirmed:
+		print('unconfirmed')
 		return redirect(url_for('index'))
 	return render_template('unconfirmed.html')
 
@@ -71,16 +72,26 @@ def forgot_password():
 	form = RequestPasswordResetForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(email=form.email.data).first()
+		token = user.generate_reset_token()
 		send_mail(form.email.data, 'Reset your password', 'reset_password', user=user, token=token)
-		flash('We have sent an email with the link to reset on your inbox')
+		flash('We have sent an email with details to reset your password')
 		return redirect(url_for('auth.login'))
 	return render_template('request_password_reset.html', form=form)
 
 
-# @auth.route('/reset_password/<token>')
-# def reset(token):
-
-
+@auth.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset(token):
+	if current_user.is_authenticated:
+		return redirect(url_for('main.index'))
+	form = PasswordResetForm()
+	if form.validate_on_submit():
+		if User.reset_password(token, form.password.data):
+		    db.session.commit()
+		    flash('Your password has been updated.')
+		    return redirect(url_for('auth.login'))
+		else:
+		    return redirect(url_for('main.index'))
+	return render_template('password_reset.html', form=form)
 
 
 @auth.route('/confirm/<token>')
