@@ -12,92 +12,34 @@ from flask_socketio import emit
 @user.route("/create-channel", methods=['GET', 'POST'])
 def create_channel():
 
-	if request.method == 'POST':
-		print('Hey there, here is the post from create-channel route')
-		channel_name = request.form.get('channel_name')
-		channel_description = request.form.get('channel_description')
-		username = session.get('username')
-		email = session.get('email')
-		channel_creator = User.query.filter_by(username=username, email=email).first()
-
-		if(channel_creator):
-			check_channel = Channel.query.filter_by(name=channel_name).first()
-
-			if(check_channel):
-				return jsonify({'response': 'Channel already in our records'})
-
-			new_channel = Channel(name=channel_name, description=channel_description, channel_creator=channel_creator.id)
-			db.session.add(new_channel)
-			db.session.commit()
-			return jsonify({'response': 'Channel created successfully'})
-
-	return redirect(url_for('index'))
+	return True
 
 
-@user.route("/join-channel/channels", methods=['GET', 'POST'])
+@user.route("/join-channel", methods=['GET', 'POST'])
 def search_channel():
-	if request.method == 'POST':
-		print('Hey there, here is the post from join-channel route')
-		channel_name = request.form.get('search_channel').lower()
-		channels = Channel.query.filter(func.lower(Channel.name).like('%' +channel_name+ '%')).all()
-
-		if(channels):
-			return jsonify({'response': [{'id': channel.id, 'name': channel.name, 'description': channel.description, 'created': channel.channel_creation, 'creator': channel.channel_creator} for channel in channels]})
-
-		return jsonify({'response': 'No such a channel in our records'})
-
-	return redirect(url_for('index'))
+	
+	return True
 
 
-@user.route("/join-channel/channels/join", methods=['POST'])
+@user.route("/join-channel/<int:channe_id>", methods=['POST'])
 def join_channel():
-	print('Hey there, here is the post from join-channel route')
-	channel_id = request.form.get('channel_id')
-	channel = Channel.query.filter_by(id=channel_id).first()
 
-	if(channel):
-		username = session.get('username')
-		email = session.get('email')
-		user = User.query.filter(and_(User.username==username, User.email==email)).first()
-		print(user.username, user.email)
-		user.channel_joined = channel.id
-		db.session.add(user)
-		db.session.commit()
-		return jsonify({'response': 'Channel joined successfully', 'data': {'name': channel.name, 'description': channel.description, 'created': channel.channel_creation, 'creator': channel.channel_creator}})
+	return True
 
 
-@user.route("/conversation/user", methods=['GET', 'POST'])
+@user.route("/conversation/users", methods=['GET', 'POST'])
 def search_user():
 
-	if request.method == 'POST':
-		user_name = session.get('username')
-		user_email = session.get('email')
-		search_user_name = request.form.get('search_people').lower()
-		user = User.query.filter(and_(func.lower(User.username).like("%" +search_user_name+ "%"), User.username != user_name, User.email != user_email)).all()
-
-		if(user):
-			return jsonify({'response': [{'id': user.id, 'username': user.username, 'email': user.email, 'joined': user.joined, 'is_active': user.is_active, 'last_seen': user.last_seen} for user in user]})
-
-		return jsonify({'response': 'No such a user in our records'})
-
-	return redirect(url_for('index'))
+	return True
 
 
-@user.route("/conversation/user/join", methods=['POST'])
-def join_conversation():
+@user.route("/conversation/user/<user_id>", methods=['POST'])
+def join_conversation(user_id):
 
-	user_connection = request.form.get('user_id')
-	if(user_connection):
-		username = session.get('username')
-		email = session.get('email')
-		user = User.query.filter_by(username=username, email=email).first()
-		connection = Connection(from_id=user.id, to_id=user_connection)
-		db.session.add(connection)
-		db.session.commit()
-
-		return jsonify({'response': 'Connection created successfully'})
+	return True
 
 
+# ===============================================================================
 @user.route('/fetch/direct/messages', methods=['GET', 'POST'])
 def fetch_direct_message():
 
