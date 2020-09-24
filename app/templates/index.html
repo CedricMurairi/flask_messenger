@@ -18,9 +18,9 @@
 	<div id="main-container">
 		<div id="aside-card">
 			<div id="up">
-				<a href="url_for('')"><p id="start_conversation_button">+Start a conversation</p></a>
-				<a href="url_for('')"><p id="create_channel_button">+Start a chanel</p></a>
-				<a href="url_for('')"><p id="join_channel_button">+Join a chanel</p></a>
+				<a href="{{url_for('user.search_user')}}"><p id="start_conversation_button">+Start a conversation</p></a>
+				<a href="{{url_for('user.create_channel')}}"><p id="create_channel_button">+Start a chanel</p></a>
+				<a href="{{url_for('user.search_channel')}}"><p id="join_channel_button">+Join a chanel</p></a>
 			</div>
 			<hr>
 			{% if current_user.is_authenticated %}
