@@ -33,3 +33,8 @@ class RequestPasswordResetForm(FlaskForm):
 	def validate_email(self, field):
 		if not User.query.filter_by(email=field.data).first():
 			raise ValidationError('Email does not exist in our records')
+
+class PasswordResetForm(FlaskForm):
+	password = PasswordField('Password', validators=[InputRequired()])
+	confirm_password = PasswordField('Confirm password', validators=[InputRequired(), EqualTo('password', 'Passwords must match')])
+	submit = SubmitField('Request')
