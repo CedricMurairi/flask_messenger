@@ -1,42 +1,87 @@
 #!/usr/bin/python3
 
 from flask import request, jsonify, render_template ,redirect, url_for, session
-from ..models import User, Channel, Connection, MessageUser, MessageChannel
+from ..models import User, Channel, Connection, MessageUser, MessageChannel, JoinedChannel
 from . import user
 from .. import db
 from .. import socketio
 from sqlalchemy import and_, or_, func
 from flask_socketio import emit
+from flask_login import current_user, login_required
+from .forms import CreateChannelForm, SearchUserForm, SearchChannelForm
 
 
 @user.route("/create-channel", methods=['GET', 'POST'])
+@login_required
 def create_channel():
 
-	return True
+	form = CreateChannelForm()
+	if form.validate_on_submit():
+		channel_name = form.name.data
+		channel_description = form.description.data
+		channel = Channel(name=channel_name, description=channel_description, channel_creator=current_user.id)
+		db.session.add(channel)
+		db.session.commit()
+		flash('Channel succesfully created')
+		return redirect(url_for('user.create_channel'))
+
+	return render_template('create_channel.html', form=form)
 
 
 @user.route("/join-channel", methods=['GET', 'POST'])
+@login_required
 def search_channel():
 	
-	return True
+	form = SearchChannelForm()
+	if form.validate_on_submit():
+		channel_name = form.name.data.lowe()
+		channel_description = form.description.data.lowe()
+		channels = Channel.query.filter(or_(func.lower(Channel.name).like("%" +channel_name+ "%"), func.lower(Channel.description).like("%" +channel_description+ "%"))).all()
+		if channels:
+			return redirect(url_for('user.search_channel', channels=channels))
+		flash('No such channel in our servers')
+		return redirect(url_for('user.search_channel'))
+
+	return render_template('search_channel.html', form=form)
 
 
 @user.route("/join-channel/<int:channe_id>", methods=['POST'])
-def join_channel():
+@login_required
+def join_channel(channel_id):
 
-	return True
+	joined_channel = JoinedChannel(user_id=current_user.id, channel_id=channel_id)
+	db.session.add(joined_channel)
+	db.session.commit()
+	flash('Successfully joined the channel')
+	return redirect(url_for('user.search_channel'))
 
 
 @user.route("/conversation/users", methods=['GET', 'POST'])
+@login_required
 def search_user():
 
-	return True
+	form = SearchUserForm()
+	if form.validate_on_submit():
+		user_name = form.username.data.lowe()
+		email = form.email.data.lowe()
+		users = User.query.filter(or_(func.lower(User.username).like("%" +user_name+ "%"), func.lower(User.email).like("%" +email+ "%"))).all()
+		if users:
+			return redirect(url_for('user.search_user', users=users))
+		flash('No such user in our servers')
+		return redirect(url_for('user.search_channel'))
+
+	return render_template('search_user.html', form=form)
 
 
 @user.route("/conversation/user/<user_id>", methods=['POST'])
+@login_required
 def join_conversation(user_id):
 
-	return True
+	connection = Connection(from_id=current_user.id, to_id=user_id)
+	db.session.add(connection)
+	db.session.commit()
+	flash('Successfully connected')
+	return redirect(url_for('user.search_user'))
 
 
 # ===============================================================================
