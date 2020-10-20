@@ -9,7 +9,7 @@ class Config():
 	SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 	SQLALCHEMY_TRACK_MODIFICATIONS = True
 	APPLICATION_MAIL_SUBJECT_PREFIX = '[Flask Messenger]'
-	APPLICATION_MAIL_SENDER = 'Cedric Murairi <mymail@gmail.com>'
+	APPLICATION_MAIL_SENDER = 'Cedric Murairi <murairicedric@gmail.com>'
 	APPLICATION_ADMIN = os.environ.get('APPLICATION_ADMIN')
 
 	@staticmethod
@@ -20,7 +20,8 @@ class DevelopmentConfig(Config):
 	DEBUG = True
 	MAIL_SERVER = 'smtp.googlemail.com'
 	MAIL_PORT = 587
-	MAIL_USES_TLS = True
+	MAIL_USE_TLS = True
+	# MAIL_USE_SSL = True
 	MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
