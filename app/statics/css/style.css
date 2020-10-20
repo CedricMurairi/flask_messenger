@@ -36,6 +36,10 @@ nav{
 	color: rgba(255, 255, 255, 0.5);
 }
 
+#logo img{
+	margin-right: 10px;
+}
+
 header ul{
 	display: flex;
 }
@@ -101,18 +105,19 @@ li{
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
 	padding: 20px 0px;
 	position: absolute;
-	top: 40px;
-	right: 20px;
+	top: 55px;
+	right: 128px;
 	z-index: 200;
 }
 
 #user_profile_option_card p{
+	cursor: pointer;
 	padding: 5px 20px;
 	color: #283E4A;
 	font-weight: bold;
 }
 
-nav a {
+nav a , #main-container a{
 	text-decoration: none;
 }
 
@@ -137,6 +142,15 @@ nav a {
 	color: white;
 	max-width: 250px;
 	letter-spacing: 1.5px;
+}
+
+#navdiv{
+	display: flex;
+}
+
+#account{
+	padding-right: 10px;
+	cursor: pointer;
 }
 
 hr{
@@ -206,8 +220,8 @@ hr{
 
 .button, button{
 	padding: 5px 5px;
-	border-radius: 5px;
-	box-shadow: 1px 1px 4px black;
+	border-radius: 2px;
+	box-shadow: 0px 0px 2px black;
 	box-sizing: border-box;
 	margin-right: 20px;
 	cursor: pointer;

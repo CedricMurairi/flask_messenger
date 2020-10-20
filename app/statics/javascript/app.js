@@ -56,7 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 
-	window.addEventListener('click', async function(event){
+	account_card.onclick = function(){
+		alert('Window clicked');
+	}
+
+
+	window.addEventListener('click', function(event){
 		if(event.target == start_conversation_button){
 			var response = make_get_request('/user/conversation/user', 'Start Conversation', join_conversation_template());
 		}

@@ -103,6 +103,7 @@ def fetch_direct_message():
 
 	 return redirect(url_for('index'))
 
+
 @user.route('/fetch/channel/messages', methods=['GET', 'POST'])
 def fetch_channel_message():
 
