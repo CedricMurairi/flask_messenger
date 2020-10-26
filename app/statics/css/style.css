@@ -6,6 +6,7 @@
 
 body{
 	height: 100vh;
+	/*font-family: arial;*/
 }
 
 footer, header{
@@ -130,6 +131,7 @@ nav a , #main-container a{
 	display: flex;
 	justify-content: center;
 	align-content: center;
+	/*flex-direction: column;*/
 }
 
 .drop-down-button{
@@ -215,7 +217,7 @@ hr{
 }
 ::-webkit-scrollbar {
     width: 0px;
-    background: transparent; /* make scrollbar transparent */
+    background: transparent;
 }
 
 .button, button{
@@ -245,16 +247,33 @@ button{
 	position: relative;
 }
 
-input[type='text'], input[type='email'], input[type='password'], input[type='search']{
+input[type='text'], input[type='email'], input[type='password'], input[type='search'],textarea{
 	width: 300px;
-	padding: 5px 20px;
-	margin: 5px 0px;
-	border: 2px solid white;
+	padding: 10px 20px;
+	margin-bottom: 5px 0px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
-	box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
 	font-weight: bold;
 	font-size: 20;
 	outline: none;
+}
+
+input[type="submit"]{
+	padding: 10px 20px;
+	margin-top: 10px;
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	background-color: #283E4A;
+	color: white;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.form-group{
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
 }
 
 #correct-email-error, #correct-password-error, #password-match-error{
@@ -269,8 +288,8 @@ input[type='text'], input[type='email'], input[type='password'], input[type='sea
 	font-weight: bold;
 }
 
-input:focus{
-	border: 2px solid #283E4A; 
+input:focus, textarea:focus{
+	 border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .submit-button{
