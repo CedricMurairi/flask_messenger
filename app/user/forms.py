@@ -9,8 +9,8 @@ class CreateChannelForm(FlaskForm):
 	description = TextAreaField('Channel description', validators=[InputRequired()])
 	submit = SubmitField('Create')
 
-	def validate_name(self):
-		if Channel.query.filter_by(name=name).first():
+	def validate_name(self, field):
+		if Channel.query.filter_by(name=field.data).first():
 			raise ValidationError('Channel name already in use')
 
 

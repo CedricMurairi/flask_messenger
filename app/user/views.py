@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import request, jsonify, render_template ,redirect, url_for, session
+from flask import request, jsonify, render_template ,redirect, url_for, session, flash
 from ..models import User, Channel, Connection, MessageUser, MessageChannel, JoinedChannel
 from . import user
 from .. import db
@@ -34,11 +34,12 @@ def search_channel():
 	
 	form = SearchChannelForm()
 	if form.validate_on_submit():
-		channel_name = form.name.data.lowe()
-		channel_description = form.description.data.lowe()
+		channel_name = form.name.data.lower()
+		channel_description = form.description.data.lower()
 		channels = Channel.query.filter(or_(func.lower(Channel.name).like("%" +channel_name+ "%"), func.lower(Channel.description).like("%" +channel_description+ "%"))).all()
 		if channels:
-			return redirect(url_for('user.search_channel', channels=channels))
+			return {'channels': [[channel.name, channel.description, channel.creator.username] for channel in channels]}
+			# return redirect(url_for('user.search_channel', channels=channels))
 		flash('No such channel in our servers')
 		return redirect(url_for('user.search_channel'))
 
@@ -62,11 +63,12 @@ def search_user():
 
 	form = SearchUserForm()
 	if form.validate_on_submit():
-		user_name = form.username.data.lowe()
-		email = form.email.data.lowe()
+		user_name = form.username.data.lower()
+		email = form.email.data.lower()
 		users = User.query.filter(or_(func.lower(User.username).like("%" +user_name+ "%"), func.lower(User.email).like("%" +email+ "%"))).all()
 		if users:
-			return redirect(url_for('user.search_user', users=users))
+			return {'users': [[user.username, user.email] for user in users]}
+			# return redirect(url_for('user.search_user', users=users))
 		flash('No such user in our servers')
 		return redirect(url_for('user.search_channel'))
 
