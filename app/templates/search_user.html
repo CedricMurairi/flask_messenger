@@ -1,1 +1,6 @@
 {% extends 'index.html' %}
+
+{% block mainbar %}
+	<h1>Create a user here</h1>
+	{{wtf.quick_form(form)}}
+{% endblock %}

@@ -13,12 +13,12 @@
 	<section id="main-section">
 		<div id="login-block">
 			{{wtf.quick_form(form)}}
-		</div>
-		<div>
-			<p>Do not have an account? | <a href="{{ url_for('auth.register') }}">Register</a></p>
-		</div>
-		<div>
-			<p>Forgot password? | <a href="{{ url_for('auth.forgot_password') }}">Reset</a></p>
+			<div>
+				<p>Do not have an account? | <a href="{{ url_for('auth.register') }}">Register</a></p>
+			</div>
+			<div>
+				<p>Forgot password? | <a href="{{ url_for('auth.forgot_password') }}">Reset</a></p>
+			</div>
 		</div>
 	</section>
 {% endblock %}
