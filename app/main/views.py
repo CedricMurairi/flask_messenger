@@ -12,8 +12,6 @@ def ping_user():
 		current_user.last_seen = datetime.utcnow()
 		db.session.add(current_user)
 		db.session.commit()
-	# if current_user.is_authenticated and not current_user.confirmed and request.endpoint[:5] != 'auth':
-	# 	return redirect(url_for('auth.unconfirmed'))
 
 
 @main.route('/', methods=['GET'])
@@ -25,16 +23,16 @@ def index():
 		conversation_users = None
 
 	if current_user.is_authenticated:
-		channel_created = current_user.channels
-		channel_joined = current_user.joined_channels
+		channel_created = current_user.channels.all()
+		channel_joined = current_user.joined_channels.all()
 		connections = Connection.query.filter(or_(Connection.from_id==current_user.id, Connection.to_id==current_user.id)).all()
 
 		conversation_user_id = []
 
 		for connection in connections:
-			if (connection.from_id == user.id):
+			if (connection.from_id == current_user.id):
 				conversation_user_id.append(connection.to_id)
-			if (connection.to_id == user.id):
+			if (connection.to_id == current_user.id):
 				conversation_user_id.append(connection.from_id)
 
 		conversation_users = User.query.filter(User.id.in_(conversation_user_id)).all()

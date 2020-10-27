@@ -36,17 +36,15 @@ def search_channel():
 	if form.validate_on_submit():
 		channel_name = form.name.data.lower()
 		channel_description = form.description.data.lower()
-		channels = Channel.query.filter(or_(func.lower(Channel.name).like("%" +channel_name+ "%"), func.lower(Channel.description).like("%" +channel_description+ "%"))).all()
-		if channels:
-			return {'channels': [[channel.name, channel.description, channel.creator.username] for channel in channels]}
-			# return redirect(url_for('user.search_channel', channels=channels))
-		flash('No such channel in our servers')
-		return redirect(url_for('user.search_channel'))
+		if channel_name or channel_description:
+			channels = Channel.query.filter(or_(func.lower(Channel.name).like("%" +channel_name+ "%"), func.lower(Channel.description).like("%" +channel_description+ "%"))).all()
+			if channels:
+				return render_template('search_channel.html', form=form, channels=channels)
 
 	return render_template('search_channel.html', form=form)
 
 
-@user.route("/join-channel/<int:channe_id>", methods=['POST'])
+@user.route("/join-channel/<int:channel_id>", methods=['GET', 'POST'])
 @login_required
 def join_channel(channel_id):
 
@@ -65,17 +63,21 @@ def search_user():
 	if form.validate_on_submit():
 		user_name = form.username.data.lower()
 		email = form.email.data.lower()
-		users = User.query.filter(or_(func.lower(User.username).like("%" +user_name+ "%"), func.lower(User.email).like("%" +email+ "%"))).all()
-		if users:
-			return {'users': [[user.username, user.email] for user in users]}
-			# return redirect(url_for('user.search_user', users=users))
-		flash('No such user in our servers')
-		return redirect(url_for('user.search_channel'))
+		
+		# return redirect(url_for('user.search_user', username=user_name, email=email))
+
+		# username = request.args.get('username', None)
+		# email = request.args.get('email', None)
+		if user_name and email:
+			users = User.query.filter(or_(func.lower(User.username).like("%" +user_name+ "%"), func.lower(User.email).like("%" +email+ "%"))).all()
+
+			if users:
+				return render_template('search_user.html', form=form, users=users)
 
 	return render_template('search_user.html', form=form)
 
 
-@user.route("/conversation/user/<user_id>", methods=['POST'])
+@user.route("/conversation/user/<user_id>", methods=['GET', 'POST'])
 @login_required
 def join_conversation(user_id):
 
