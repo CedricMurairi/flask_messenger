@@ -24,11 +24,11 @@ var conversation_title = document.querySelector('#conversation_title');
 var channel_list = document.querySelector('#channels');
 var conversation_list = document.querySelector('#conversations');
 var search_people_list = document.querySelector('#search_people_list');
-const channel_card_join = Handlebars.compile(document.querySelector('#channel_card_join_template').innerHTML);
-const start_conversation_card = Handlebars.compile(document.querySelector('#start_conversation_card_template').innerHTML);
-const user_message_area = Handlebars.compile(document.querySelector('#user-conversation-area').innerHTML);
-const channel_message_area = Handlebars.compile(document.querySelector('#channel-conversation-area').innerHTML);
-const message_template = Handlebars.compile(document.querySelector('#message').innerHTML);
+// const channel_card_join = Handlebars.compile(document.querySelector('#channel_card_join_template').innerHTML);
+// const start_conversation_card = Handlebars.compile(document.querySelector('#start_conversation_card_template').innerHTML);
+// const user_message_area = Handlebars.compile(document.querySelector('#user-conversation-area').innerHTML);
+// const channel_message_area = Handlebars.compile(document.querySelector('#channel-conversation-area').innerHTML);
+// const message_template = Handlebars.compile(document.querySelector('#message').innerHTML);
 const button_join_channel_card = document.querySelector('#join-channel-via-card-button');
 const button_join_conversation_card = document.querySelector('#start-conversation-via-card-button');
 const message_area = document.querySelector('#message-area');
@@ -42,23 +42,23 @@ Handlebars.registerHelper('ifCond', function(v1, v2, options) {
 	
 document.addEventListener('DOMContentLoaded', () => {
 
-	const test_template = Handlebars.compile(document.querySelector('#result').innerHTML);
+// 	const test_template = Handlebars.compile(document.querySelector('#result').innerHTML);
 	
-	console.log(test_template({'age': 20, 'name': 'Yves Shouenard', 'city': 'Las Vegas'}));
+// 	console.log(test_template({'age': 20, 'name': 'Yves Shouenard', 'city': 'Las Vegas'}));
 
-// compiling tamplates with handlebars to be used in the channel creation, join and conversation start point
-	const create_channel_template = Handlebars.compile(document.querySelector('#channel-creation').innerHTML);
-	const join_channel_template = Handlebars.compile(document.querySelector('#join-channel').innerHTML);
-	const join_conversation_template = Handlebars.compile(document.querySelector('#join-conversation').innerHTML);
+// // compiling tamplates with handlebars to be used in the channel creation, join and conversation start point
+// 	const create_channel_template = Handlebars.compile(document.querySelector('#channel-creation').innerHTML);
+// 	const join_channel_template = Handlebars.compile(document.querySelector('#join-channel').innerHTML);
+// 	const join_conversation_template = Handlebars.compile(document.querySelector('#join-conversation').innerHTML);
 
 	window.onpopstate = function(event) {
 		main_screen.innerHTML = event.state['data'];
 	};
 
 
-	account_card.onclick = function(){
-		alert('Window clicked');
-	}
+	// account_card.addEventListener('click', function(event){
+	// 	alert('Window clicked');
+	// });
 
 
 	window.addEventListener('click', function(event){
