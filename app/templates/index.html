@@ -6,7 +6,7 @@
 {% block navbar %}
 
 	{% if current_user.is_authenticated %}
-		<div id="navdiv"><div><div class="button" id="account">{{current_user.username}}</div> <div id="user_profile_option_card"><p>Account</p><p>Settings</p><p>LogOut</p></div></div> <a class="button" href="{{ url_for('auth.logout') }}">Logout</a></div>
+		<div id="navdiv"><div><div class="button" id="account">{{current_user.username}}</div> <div class="hide" id="user_profile_option_card"><p>Account</p><p>Settings</p><a href="{{ url_for('auth.logout') }}"><p>LogOut</p></a></div></div> <a class="button" href="{{ url_for('auth.logout') }}">Logout</a></div>
 	{% else %}
 		<a class="button" href="{{ url_for('auth.login') }}">Login</a>
 		<a class="button" href="{{ url_for('auth.register') }}">Register</a>
@@ -26,23 +26,31 @@
 			{% if current_user.is_authenticated %}
 				<div id="down">
 					<div>
-						<p id="channel_title">Chanels</p>
+						<p id="channel_title">Channels</p>
 						<div id="channels" class="hide">
 							{% for channel in channel_created %}
 								<a href="url_for('')">
 									<div class="channel_card" data-id={{channel.id}}>
 										<h5>{{channel.name}}</h5>
-										<h6>{{channel.description}}</h6>
-										<h6>Created: {{ (channel.channel_creation) }}
+										{% if channel.description|length > 30 %}
+											<h6>{{channel.description[:30]}}...</h6>
+										{% else %}
+											<h6>{{channel.description}}</h6>
+										{% endif %}
+										<h6>Created: {{ moment(channel.channel_creation).fromNow(refresh=True) }}
 									</div>
 								</a>
 							{% endfor %}
 							{% for channel in channel_joined %}
 								<a href="url_for('')">
 									<div class="channel_card" data-id={{channel.id}}>
-										<h5>{{channel.name}}</h5>
-										<h6>{{channel.description}}</h6>
-										<h6>Created: {{ (channel.channel_creation) }}
+										<h5>{{channel.channel.name}}</h5>
+										{% if channel.channel.description|length > 30 %}
+											<h6>{{channel.channel.description[:30]}}...</h6>
+										{% else %}
+											<h6>{{channel.channel.description}}</h6>
+										{% endif %}
+										<h6>Created: {{ moment(channel.channel.channel_creation).fromNow(refresh=True) }}
 									</div>
 								</a>
 							{% endfor %}
@@ -58,7 +66,7 @@
 										{% if conversation_user.is_active %}
 											<h6>Active now</h6>
 										{% else %}
-											<h6>Last seen: {{conversation_user.last_seen}}</h6>
+											<h6>Last seen: {{moment(conversation_user.last_seen).fromNow(refresh=True)}}</h6>
 										{% endif %}
 									</div>
 								</a>

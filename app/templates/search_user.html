@@ -1,6 +1,15 @@
 {% extends 'index.html' %}
 
 {% block mainbar %}
-	<h1>Create a user here</h1>
+	<h1>Search for a user here</h1>
 	{{wtf.quick_form(form)}}
+
+	<div id="search_result">
+		{% for user in users %}
+			<div class="result_card">
+				<h3>{{ user.username }} | {{ user.email }} <span><a href="{{ url_for('user.join_conversation', user_id=user.id) }}">Connect</a></span></h3>
+				<h5>Last seen: {{ moment(user.last_seen).fromNow(refresh=True) }}</h5>
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}

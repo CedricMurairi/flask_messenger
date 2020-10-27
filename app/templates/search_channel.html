@@ -3,4 +3,14 @@
 {% block mainbar %}
 	<h1>Search a channel here</h1>
 	{{wtf.quick_form(form)}}
+
+	<div id="search_result">
+		{% for channel in channels %}
+			<div class="result_card">
+				<h3>{{ channel.name }} | Creator: {{ channel.creator.username }} <span><a href="{{ url_for('user.join_channel', channel_id=channel.id) }}">Join</a></span></h3>
+				<p><strong>Description:</strong> {{ channel.description }}</p>
+				<h5>Created: {{ moment(channel.channel_creation).fromNow(refresh=True) }}</h5>
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}
