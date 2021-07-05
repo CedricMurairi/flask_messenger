@@ -8,93 +8,26 @@
 	{% if current_user.is_authenticated %}
 		<div id="navdiv"><div><div class="button" id="account">{{current_user.username}}</div> <div class="hide" id="user_profile_option_card"><p>Account</p><p>Settings</p><a href="{{ url_for('auth.logout') }}"><p>LogOut</p></a></div></div> <a class="button" href="{{ url_for('auth.logout') }}">Logout</a></div>
 	{% else %}
-		<a class="button" href="{{ url_for('auth.login') }}">Login</a>
-		<a class="button" href="{{ url_for('auth.register') }}">Register</a>
+		<a href="{{ url_for('auth.login') }}"><button class="">Login</button></a>
+		<a href="{{ url_for('auth.register') }}"><button class="">Register</button></a>
 	{% endif %}
 
 {% endblock %}
 
 {% block content %}
 	<div id="main-container">
-		<div id="aside-card">
-			<div id="up">
-				<a href="{{url_for('user.search_user')}}"><p id="start_conversation_button">+Start a conversation</p></a>
-				<a href="{{url_for('user.create_channel')}}"><p id="create_channel_button">+Start a chanel</p></a>
-				<a href="{{url_for('user.search_channel')}}"><p id="join_channel_button">+Join a chanel</p></a>
-			</div>
-			<hr>
-			{% if current_user.is_authenticated %}
-				<div id="down">
-					<div>
-						<p id="channel_title">Channels</p>
-						<div id="channels" class="hide">
-							{% for channel in channel_created %}
-								<a href="url_for('')">
-									<div class="channel_card" data-id={{channel.id}}>
-										<h5>{{channel.name}}</h5>
-										{% if channel.description|length > 30 %}
-											<h6>{{channel.description[:30]}}...</h6>
-										{% else %}
-											<h6>{{channel.description}}</h6>
-										{% endif %}
-										<h6>Created: {{ moment(channel.channel_creation).fromNow(refresh=True) }}
-									</div>
-								</a>
-							{% endfor %}
-							{% for channel in channel_joined %}
-								<a href="url_for('')">
-									<div class="channel_card" data-id={{channel.id}}>
-										<h5>{{channel.channel.name}}</h5>
-										{% if channel.channel.description|length > 30 %}
-											<h6>{{channel.channel.description[:30]}}...</h6>
-										{% else %}
-											<h6>{{channel.channel.description}}</h6>
-										{% endif %}
-										<h6>Created: {{ moment(channel.channel.channel_creation).fromNow(refresh=True) }}
-									</div>
-								</a>
-							{% endfor %}
-						</div>
-					</div>
-					<div>
-						<p id='conversation_title'>Conversation</p>
-						<div id="conversations" class="hide">
-							{% for conversation_user in conversation_users %}
-								<a href="">
-									<div class="user_conversation_card" id="user_conversation_card" data-id={{conversation_user.id}}>
-										<h5>{{conversation_user.username}}</h5>
-										{% if conversation_user.is_active %}
-											<h6>Active now</h6>
-										{% else %}
-											<h6>Last seen: {{moment(conversation_user.last_seen).fromNow(refresh=True)}}</h6>
-										{% endif %}
-									</div>
-								</a>
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-			{% endif %}
-		</div>
 		<div id="main-screen">
-			{% block mainbar %}
-				<h2>Join Flask Messenger, the best place to share</h2>
-				<hr>
-				<div id="home-container">
-					<div class="home-box">
-						<h3>Title 1</h3>
-					</div>
-					<div class="home-box">
-						<h3>Title 2</h3>
-					</div>
-					<div class="home-box">
-						<h3>Title 3</h3>
-					</div>
-					<div class="home-box">
-						<h3>Title 4</h3>
-					</div>
-				</div>
-			{% endblock %}
+			<div>
+				<h1>Welcome to Flask Messenger</h1>
+				<p>Join Flask Messenger to laverage group and direct conversations with the people around you.</p>
+				<ul>
+					<li>Create channels</li>
+					<li>Start new conversations from anywhere</li>
+					<li>Connect with people nearby that share same interests</li>
+				</ul>
+				<a href="{{ url_for('auth.login') }}"><button>Get Started</button></a>
+			</div>
+			<img class="welcome-image" src="/statics/img/message-welcome-banner.png" alt="">
 		</div>
 	</div>
 {% endblock %}
