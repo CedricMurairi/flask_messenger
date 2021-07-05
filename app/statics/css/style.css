@@ -1,7 +1,15 @@
-*, *:before, *:after{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+body{
+	width: 80%;
+	margin: auto;
+	font-family: 'Montserrat', sans-serif;
+}
+
+header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 10vh;
+	border-bottom: 1px solid gainsboro;
 }
 
 a{
@@ -9,435 +17,31 @@ a{
 	color: inherit;
 }
 
-body{
-	height: 100vh;
-	/*font-family: arial;*/
-}
-
-footer, header{
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #283E4A;
-	color: rgba(255, 255, 255, 0.8);
-	padding: 0px 40px;
-}
-
-header{
-	height: 10vh;
-}
-
-footer{
-	height: 10vh;
-	color: rgba(255, 255, 255, 0.3);
-}
-
-nav{
-	position: relative;
-}
-
 #logo{
-	font-weight: bolder;
-	font-size: 25px;
-	color: rgba(255, 255, 255, 0.5);
-}
-
-#logo img{
-	margin-right: 10px;
-}
-
-header ul{
-	display: flex;
-}
-
-ul{
-	list-style-type: none;
-}
-
-li{
-	display: inline-block;
-}
-
-.hide{
-	display: none;
-}
-
-#channel_title, #conversation_title{
-	color: white;
-	border-radius: 5px;
+	font-size: 30px;
 	font-weight: bold;
-	background-color: #283E4A;
-}
-
-#channel_title:hover, #conversation_title:hover{
-	cursor: pointer;
-}
-
-#channels, #conversations{
-	/*background-color: rgba(0, 0, 0, 0.1);*/
-	max-height: 20vh;
-	overflow: scroll;
-}
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-}
-
-/*#conversations{
-	background-color: rgba(0, 0, 0, 0.1);
-	height: 50%;
-	overflow: scroll;
-}
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;  make scrollbar transparent 
-}*/
-
-.user_conversation_card, .channel_card{
-	padding: 5px;
-	background-color: rgba(0, 0, 0, 0.1);
-	border-radius: 5px;
-	margin: 5px 0px 0px 0px;
-}
-
-.user_conversation_card:hover, .channel_card:hover{
-	background-color: rgba(0, 0, 0, 0.2);
-	cursor: pointer;
-}
-
-#user_profile_option_card{
-	border-radius: 5px;
-	background-color: white;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-	padding: 20px 0px;
-	position: absolute;
-	top: 55px;
-	right: 128px;
-	z-index: 200;
-}
-
-#user_profile_option_card p{
-	cursor: pointer;
-	padding: 5px 20px;
-	color: #283E4A;
-	font-weight: bold;
-}
-
-nav a , #main-container a{
-	text-decoration: none;
-}
-
-#user_profile_option_card p:hover{
-	background-color: rgba(0, 0, 0, 0.1);
-}
-
-#main-section{
-	height: 80vh;
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	/*flex-direction: column;*/
-}
-
-.drop-down-button{
-	padding: 15px 20px;
-	border-radius: 50px;
-	background-color: #3b4549;
-	margin: 10px 10px;
-	font-size: 20;
-	font-weight: bold;
-	color: white;
-	max-width: 250px;
-	letter-spacing: 1.5px;
-}
-
-#navdiv{
-	display: flex;
-}
-
-#account{
-	padding-right: 10px;
-	cursor: pointer;
-}
-
-hr{
-	margin: auto;
-	width: 90%;
-	height: 3px;
-	opacity: 0.2;
-	background-color: black;
-}
-
-#channel-card-join, #start_conversation_card{
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-	padding: 5px 10px;
-	margin-top: 10px;
-	display: flex;
-	justify-content: space-between;
-}
-
-.message-block{
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.message-area{
-	display: flex;
-	flex-direction: column;
-	max-height: 65.5vh;
-	height: 65.5vh;
-	overflow: scroll;
-}
-
-.message-area p{
-	padding: 3px 0px;
-}
-
-.message{
-	width: fit-content;
-	border-radius: 5px;
-	padding: 5px 10px;
-	margin: 10px 10px;
-	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
-	font-weight: bold;
-}
-
-.sent{
-	align-self: flex-end;
-	color: rgba(255, 255, 255, 0.8);
-	background-color: #283E4A;
-}
-
-.recieved{
-	align-self: flex-start;
-	color: #283E4A;
-	background-color: rgba(255, 255, 200, 0.6);
-}
-
-#down{
-	margin-top: 5px;
-	height: 70%;
-}
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-
-.button, button{
-	padding: 5px 5px;
-	border-radius: 2px;
-	box-shadow: 0px 0px 2px black;
-	box-sizing: border-box;
-	margin-right: 20px;
-	cursor: pointer;
-	font-weight: bolder;
-	color: rgba(255, 255, 255, 0.8);
-}
-
-button{
-	outline: none;
-	border: none;
-	background-color: #283E4A;
-}
-
-.clear-blue{
-	background-color: rgba(255, 255, 255, .8);
-	color: #283E4A;;
-}
-
-#registration-block, #login-block{
-	padding: 50px;
-	position: relative;
-}
-
-input[type='text'], input[type='email'], input[type='password'], input[type='search'],textarea{
-	width: 300px;
-	padding: 10px 20px;
-	margin-bottom: 5px 0px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	border-radius: 5px;
-	font-weight: bold;
-	font-size: 20;
-	outline: none;
-}
-
-input[type="submit"]{
-	padding: 10px 20px;
-	margin-top: 10px;
-	outline: none;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	border-radius: 5px;
-	background-color: #283E4A;
-	color: white;
-	cursor: pointer;
-	font-weight: bold;
-}
-
-.help-block{
-	color: rgba(255, 0, 5);
-	font-weight: bold;
-}
-
-.form-group{
-	margin-top: 10px;
-	display: flex;
-	flex-direction: column;
-}
-
-#correct-email-error, #correct-password-error, #password-match-error{
-	width: 300px;
-	color: rgba(0, 0, 0, 0.5);
-	font-size: 12px;
-	overflow-wrap: break-word;
-	padding: 5px 5px;
-	border-radius: 5px;
-	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-	margin-bottom: 5px;
-	font-weight: bold;
-}
-
-input:focus, textarea:focus{
-	 border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.submit-button{
-	margin: 10px 0px;
-	padding: 6px 10px;
-	outline: none;
-	box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-	font-size: 20;
-	font-weight: bolder;
-	border: none;
-	border-radius: 5px;
-}
-
-.flash_message{
-	align-self: flex-start;
-	padding: 0px;
-	margin: 0px;
-	width: fit-content;
-	padding: 10px 20px;
-	border-radius: 5px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	margin: 0px 0px 20px 0px;
-	letter-spacing: 1px;
-	color: rgba(0, 0, 0, 0.4);
-}
-
-#main-container{
-	height: 80vh;
-	display: flex;
-}
-
-header a, #error-message button a{
-	color: rgba(255, 255, 255, 0.8);
-	text-decoration: none;
-}
-
-header a:visited, #error-message button a:visited{
-	color: rgba(255, 255, 255, 0.8);
 }
 
 #main-screen{
-	flex: 3;
-	margin-top: 20px;
-	margin-left: 10px;
-	margin-right: 50px;
-	padding: 0px 10px 10px 10px;
-	overflow: scroll;
-}
-
-#search_result{
-	margin: 20px 0px;
-}
-
-.result_card{
-	padding: 10px 10px;
-	margin-bottom: 10px;
-	border-radius: 5px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.result_card h3 span{
-	float: right;
-	text-decoration: underline;
-}
-
-#error-message{
 	height: 80vh;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
-	flex-direction: column;
 }
 
-#join_channel, #channel_creation, #join_conversation{
-	margin: 10px 5px;
+#main-screen ul{
+	list-style-type: circle;
+	font-style: italic;
 }
 
-hr{
-	width: 100%;
-}
-
-h3{
-	margin: 0px 0px 0px 0px;
-}
-
-#aside-card{
-	padding: 10px 20px 10px 10px;
-	flex: 1;
-	border-right: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-#aside-card #up, #aside-card #down{
-	height: 30%;
-}
-
-#aside-card #up p, #aside-card #down p{
-	padding: 5px 10px;
-	margin-bottom: 5px;
-}
-
-#aside-card #up p{
-	border-radius: 5px;
-	color: white;
-	box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-	background-color: #283E4A;
-}
-
-#start_conversation_button, #create_channel_button, #join_channel_button{
-	cursor: pointer;
-	font-weight: bold;
-}
-
-button:disabled{
-	background-color: #7e939e;
-}
-
-#home-container{
-	display: grid;
-	height: 80%;
-	margin: 20px 0px 0px 0px;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
-	grid-gap: 10px;
-}
-
-.home-box{
+footer{
+	margin-top: 20px;
+	padding-top: 10px;
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-	border-radius: 5px;
-	background-color: #fcfaf2;
+	justify-content: space-between;
+	border-top: 1px solid gainsboro;
 }
 
-.home-box:first-of-type, .home-box:last-of-type{
-	background-color: #e6f0f7;
-}
-
-.fake-container{
-	margin: 10px 0px;
+.welcome-image{
+	width: 50%;
 }
